@@ -292,7 +292,7 @@ hr.groove { border: 0; border-top: 1px solid var(--shadow); border-bottom: 1px s
   padding-left: max(16px, env(safe-area-inset-left, 0px));
   padding-right: max(16px, env(safe-area-inset-right, 0px));
 }
-#icons { display: grid; grid-auto-flow: column; grid-template-rows: repeat(auto-fill, 84px); gap: 2px 6px; height: 100%; width: max-content; padding-block: 6px; }
+#icons { display: grid; grid-auto-flow: column; grid-template-rows: repeat(auto-fill, 70px); gap: 2px 6px; height: 100%; width: max-content; padding-block: 6px; }
 .icon { width: 76px; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 4px 2px; background: none; border: 0; cursor: pointer; color: var(--hi); text-align: center; }
 .icon svg { width: 34px; height: 34px; image-rendering: pixelated; }
 .icon .nm { font-size: 11px; line-height: 1.2; padding: 1px 2px; text-shadow: 1px 1px 0 rgba(0,0,0,.55); }
@@ -455,6 +455,11 @@ hr.groove { border: 0; border-top: 1px solid var(--shadow); border-bottom: 1px s
 #sql { width: 100%; height: 150px; resize: vertical; font: 13px/1.5 var(--mono); padding: 8px 10px; background: #0f1720; color: #e6f2e0; caret-color: var(--amber); user-select: text; tab-size: 2; box-shadow: inset -1px -1px var(--hi), inset 1px 1px var(--shadow), inset -2px -2px var(--lite), inset 2px 2px var(--dark); border: 0; outline: none; display: block; }
 #sql::placeholder { color: #6b7c74; }
 #sql:focus-visible { box-shadow: inset 0 0 0 2px var(--amber); }
+.editbar { display: flex; gap: 5px; align-items: center; flex-wrap: wrap; margin-top: -1px; }
+.editbar .btn svg { width: 14px; height: 14px; }
+.editbar #runbtn { min-width: 84px; justify-content: center; }
+.editbar .kbd { color: #4a4a44; font-size: 11px; margin-left: 4px; }
+@media (max-width: 760px) { .editbar .kbd { display: none; } }
 .results { flex: 1; min-height: 110px; overflow: auto; user-select: text; }
 .results table { border-collapse: collapse; font: 12px/1.3 var(--mono); min-width: 100%; }
 .results th { position: sticky; top: 0; background: var(--face); font: 700 11px/1.3 var(--ui); text-align: left; padding: 3px 8px; box-shadow: inset -1px -1px var(--shadow), inset 1px 1px var(--hi); white-space: nowrap; }
@@ -522,11 +527,12 @@ hr.groove { border: 0; border-top: 1px solid var(--shadow); border-bottom: 1px s
 @media (max-width: 760px) { #disko { bottom: calc(40px + env(safe-area-inset-bottom, 0px)); } #disko .bot { width: 44px; height: 48px; } #disko .bubble { margin-bottom: 20px; } }
 
 /* ---------- Elena's sticky note ---------- */
-#sticky { position: absolute; z-index: 2; right: max(28px, env(safe-area-inset-right, 0px)); top: 84px; width: 172px; min-height: 150px; padding: 18px 14px 12px; background: linear-gradient(180deg, #fff9a8, var(--note) 30%, #f4e66e); color: #23324f; font: 700 21px/1.05 var(--hand); box-shadow: 2px 4px 8px rgba(0,0,0,.3), inset 0 -12px 18px -12px rgba(120,90,0,.3); cursor: pointer; border: 0; text-align: left; }
-#sticky:hover, #sticky:focus-visible { box-shadow: 3px 6px 12px rgba(0,0,0,.38), inset 0 -12px 18px -12px rgba(120,90,0,.3); outline: none; }
+#sticky { position: absolute; z-index: 2; right: max(28px, env(safe-area-inset-right, 0px)); top: 84px; width: 186px; min-height: 150px; padding: 16px 14px 12px; background: var(--note); color: #1e2433; font: 15px/1.35 var(--type); box-shadow: 3px 3px 0 rgba(0,0,0,.28); cursor: pointer; border: 0; text-align: left; }
+#sticky:hover, #sticky:focus-visible { box-shadow: 4px 4px 0 rgba(0,0,0,.36); outline: none; }
 #sticky:focus-visible { outline: 1px dotted #23324f; outline-offset: -6px; }
-#sticky small { display: block; margin-top: 8px; font-size: 17px; text-align: right; }
-#sticky .tip { font-size: 13px; font-family: var(--ui); font-weight: 400; color: #5b4a12; margin-top: 8px; }
+#sticky small { display: block; margin-top: 10px; font-size: 13px; text-align: right; }
+#sticky .k { display: block; font-size: 11px; letter-spacing: .12em; color: #7a6a1c; margin-bottom: 8px; border-bottom: 1px solid #c9b94a; padding-bottom: 4px; }
+#sticky .tip { font-size: 11px; font-family: var(--ui); color: #6b5a14; margin-top: 8px; }
 @media (max-width: 760px) { #sticky { display: none; } }
 
 /* ---------- evidence board ---------- */
@@ -553,6 +559,115 @@ hr.groove { border: 0; border-top: 1px solid var(--shadow); border-bottom: 1px s
 .rstamp.red { color: var(--stamp); }
 .rstamp.green { color: #1d7a2e; }
 .board .plate { position: absolute; left: 36px; top: 508px; z-index: 2; background: #23324f; color: #f6e7c1; font: 15px/1 var(--type); padding: 7px 12px; letter-spacing: .06em; box-shadow: 2px 3px 6px rgba(0,0,0,.4); }
+
+/* ---------- records ledger ---------- */
+.ledger { flex: 1; min-height: 0; display: grid; grid-template-columns: 230px 1fr; gap: 4px; }
+.ltree { overflow: auto; padding: 6px 4px; font-size: 12px; }
+.ltree .node { display: flex; align-items: center; gap: 5px; width: 100%; background: none; border: 0; padding: 2px 4px; text-align: left; cursor: pointer; white-space: nowrap; }
+.ltree .node svg { width: 16px; height: 16px; flex: none; }
+.ltree .node.sel { background: var(--select); color: var(--hi); }
+.ltree .node:focus-visible { outline: 1px dotted var(--ink); }
+.ltree .lvl1 { padding-left: 18px; } .ltree .lvl2 { padding-left: 34px; } .ltree .lvl3 { padding-left: 52px; font-family: var(--mono); font-size: 11.5px; }
+.ltree .tw { width: 9px; height: 9px; border: 1px solid #808080; background: #fff; font: 9px/7px var(--mono); text-align: center; color: #111; flex: none; }
+.ltree .muted { color: #777; font-style: italic; cursor: default; }
+.ltree .locked { color: #555; }
+.redact { display: inline-block; height: 11px; background: #161616; vertical-align: -1px; }
+.lpage { overflow: auto; background: #fbf8ee; color: #1e2433; padding: 18px 22px 22px; position: relative; user-select: text; }
+.lpage .run { display: flex; justify-content: space-between; font: 11px/1 var(--type); letter-spacing: .14em; color: #6d6a5c; border-bottom: 2px solid #1e2433; padding-bottom: 6px; }
+.lpage h3 { font: 26px/1.1 var(--type); margin: 14px 0 4px; letter-spacing: .02em; }
+.lpage .desc { font: 13px/1.5 var(--ui); max-width: 60ch; margin: 0 0 12px; }
+.lpage .meta { display: flex; flex-wrap: wrap; gap: 6px 18px; font: 11.5px/1.4 var(--mono); color: #4d4a40; margin-bottom: 14px; }
+.lpage .meta b { color: #1e2433; font-weight: 700; }
+.lpage table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.lpage th { text-align: left; font: 11px/1 var(--type); letter-spacing: .1em; text-transform: uppercase; padding: 6px 8px; border-bottom: 1px solid #1e2433; color: #4d4a40; }
+.lpage td { padding: 6px 8px; border-bottom: 1px solid #ddd6c2; vertical-align: top; }
+.lpage td.c { font: 700 12px/1.3 var(--mono); white-space: nowrap; }
+.lpage td.t { font: 12px/1.3 var(--mono); color: #4d4a40; white-space: nowrap; }
+.lpage td.r { white-space: nowrap; }
+.lpage .tag { display: inline-block; font: 10px/1 var(--mono); padding: 2px 4px; border: 1px solid #1e2433; margin: 0 3px 2px 0; }
+.lpage .tag.pk { background: #1e2433; color: #fbf8ee; }
+.lpage tr.hl td { background: #fff48a; }
+.lpage .ins { min-height: 18px; padding: 0 6px; font-size: 11px; }
+.lpage .ins:active { padding: 1px 5px 0 7px; }
+.lpage .actions { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 14px; }
+.lpage .foot { margin-top: 18px; font: 11px/1.4 var(--type); color: #6d6a5c; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; border-top: 1px solid #ddd6c2; padding-top: 8px; }
+.lpage .mig { position: absolute; right: 22px; top: 40px; color: #2f5d8a; border: 2px solid currentColor; padding: 4px 8px; font: 11px/1.25 var(--type); letter-spacing: .08em; transform: rotate(-6deg); text-align: center; opacity: .8; pointer-events: none; }
+.lpage .sealed { color: var(--stamp); border-width: 3px; font-size: 22px; top: 70px; right: 30px; }
+.lpage .ltip { font: 12px/1.5 var(--ui); background: #eef0f4; padding: 8px 10px; margin-top: 12px; }
+@media (max-width: 760px) { .ledger { grid-template-columns: 1fr; grid-template-rows: 150px 1fr; } .lpage .mig { position: static; display: inline-block; margin: 8px 0; transform: none; } }
+
+/* ---------- documents + reader ---------- */
+.reader-tb { display: flex; gap: 4px; align-items: center; padding: 2px 2px 5px; flex-wrap: wrap; }
+.reader-tb .sepv { width: 2px; align-self: stretch; border-left: 1px solid var(--shadow); border-right: 1px solid var(--hi); margin: 0 3px; }
+.reader-tb .pg { font-variant-numeric: tabular-nums; padding: 0 6px; }
+.reader-view { flex: 1; min-height: 0; overflow: auto; background: #6f6f6a; padding: 18px 12px 28px; }
+.reader-view .sheet { margin: 0 auto; width: 600px; max-width: 100%; transform-origin: top center; }
+.page { background: #fff; color: #111; box-shadow: 3px 3px 0 rgba(0,0,0,.35); padding: 34px 40px 40px; position: relative; font: 13px/1.55 Georgia, "Times New Roman", serif; user-select: text; }
+.page .lh { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 3px double #111; padding-bottom: 8px; margin-bottom: 18px; gap: 12px; }
+.page .lh b { font: 700 15px/1.2 Georgia, serif; letter-spacing: .06em; }
+.page .lh small { display: block; font: 11px/1.3 var(--type); letter-spacing: .12em; color: #444; }
+.page h4 { font: 700 18px/1.2 Georgia, serif; letter-spacing: .14em; margin: 0 0 12px; text-align: center; }
+.page .memo-h { display: grid; grid-template-columns: 70px 1fr; gap: 2px 10px; font: 12.5px/1.5 var(--type); margin-bottom: 14px; border-bottom: 1px solid #999; padding-bottom: 10px; }
+.page p { margin: 0 0 10px; }
+.page table.t { border-collapse: collapse; width: 100%; font: 12px/1.4 var(--type); margin: 8px 0 14px; }
+.page table.t th, .page table.t td { border: 1px solid #333; padding: 4px 8px; text-align: left; }
+.page table.t th { background: #eee; }
+.page .sig { margin-top: 22px; font: 12px/1.5 var(--type); }
+.page .ink { position: absolute; color: var(--stamp); border: 3px double currentColor; padding: 4px 12px; font: 700 20px/1 var(--type); letter-spacing: .1em; transform: rotate(-10deg); opacity: .85; text-transform: uppercase; }
+.page .ink.blue { color: #2f5d8a; }
+.page .hl { background: #fff48a; }
+.page.green { padding: 0 46px; font: 12.5px/22px var(--mono); background: #fff repeating-linear-gradient(180deg, #e3f1e0 0 44px, #fff 44px 88px); }
+.page.green::before, .page.green::after { content: ""; position: absolute; top: 0; bottom: 0; width: 28px; background: radial-gradient(circle, #6f6f6a 5px, transparent 5.5px) 0 0 / 28px 22px repeat-y, #fafaf6; }
+.page.green::before { left: 0; border-right: 1px dashed #bbb; } .page.green::after { right: 0; border-left: 1px dashed #bbb; }
+.page.green pre { margin: 0; padding: 22px 0; font: inherit; white-space: pre-wrap; }
+.page.plan { padding: 0; background: #1d4f86; }
+.page.plan svg, .page.cctv svg { display: block; width: 100%; height: auto; }
+.page.cctv { padding: 0; background: #111; }
+.page.folder { background: #e7cf97; font-family: var(--type); color: #3b2a10; }
+.page.folder .tab { position: absolute; left: 30px; top: -16px; width: 150px; height: 18px; background: #e7cf97; border-radius: 6px 6px 0 0; }
+.caption { text-align: center; color: #e7e7e0; font: 11px/1.4 var(--ui); margin-top: 10px; }
+.attach { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; padding: 6px 10px; background: #f2f1ec; border-bottom: 1px solid var(--shadow); }
+.attach .lbl { color: #444; }
+.attach .btn { min-height: 21px; padding: 1px 8px; font-size: 11px; }
+.attach .btn svg { width: 16px; height: 16px; }
+.file b.new { color: var(--bad); font-size: 10px; display: block; }
+@media (max-width: 760px) { .page { padding: 22px 18px 26px; } .page.green { padding: 0 34px; } }
+
+/* ---------- logon + card reader ---------- */
+#logon { position: fixed; inset: 0; z-index: 9450; display: grid; place-items: center; background: rgba(8,30,30,.45); padding: 16px; }
+.logon { width: min(400px, 100%); position: relative; }
+.logon .last { padding: 6px 8px; background: var(--paper); font: 12px/1.45 var(--mono); margin-bottom: 8px; box-shadow: inset -1px -1px var(--hi), inset 1px 1px var(--shadow); }
+.logon .warn { color: var(--bad); font-size: 11.5px; }
+.logon .lsimple { display: flex; flex-direction: column; gap: 8px; padding: 16px 18px 14px; }
+.logon .lsimple label { font-size: 12px; }
+.logon .lsimple .field { width: 100%; }
+.logon .btn.big { min-height: 32px; font-size: 13px; justify-content: center; }
+.logon .lsimple .linkish { align-self: flex-start; font-size: 12px; }
+.logon .codezone { display: flex; flex-direction: column; gap: 4px; }
+.logon .codezone[hidden] { display: none; }
+.logon .hint { margin: 2px 0 0; color: #555; font-size: 11px; }
+.logon .bandtop { height: 54px; background: var(--title-a); display: flex; align-items: center; gap: 10px; padding: 0 14px; color: var(--hi); }
+.logon .bandtop svg { width: 34px; height: 34px; }
+.logon .bandtop b { font: 700 18px/1 var(--ui); } .logon .bandtop b i { font-style: normal; color: var(--amber); }
+.logon .bandtop small { display: block; font: 11px/1.2 var(--ui); color: #c9d4ea; margin-top: 3px; }
+.cardnote { padding: 10px 14px 4px; font-size: 12px; line-height: 1.5; }
+.cardnote b { font-weight: 700; }
+
+/* ---------- time card ---------- */
+.timecard { margin: 14px auto 6px; width: min(380px, calc(100% - 28px)); background: #f3ecd6; color: #2a2418; font: 13px/1.4 var(--type); padding: 16px 18px 18px; position: relative; box-shadow: 3px 3px 0 rgba(0,0,0,.3); }
+.timecard .h { display: flex; justify-content: space-between; border-bottom: 2px solid #2a2418; padding-bottom: 6px; font-size: 12px; letter-spacing: .12em; }
+.timecard table { width: 100%; border-collapse: collapse; margin: 10px 0 12px; font-size: 12.5px; }
+.timecard td { padding: 4px 6px; border-bottom: 1px solid #c9bd96; }
+.timecard td:first-child { color: #6d5f3a; width: 42%; }
+.timecard .punch { color: #a3191b; }
+.timecard .code { text-align: center; font: 26px/1.2 var(--type); letter-spacing: .12em; padding: 10px 6px; border: 2px dashed #2a2418; background: #fffaf0; user-select: all; word-break: break-all; }
+.timecard .lbl { font-size: 11px; letter-spacing: .12em; color: #6d5f3a; margin-bottom: 4px; }
+.timecard .out { position: absolute; right: 16px; top: 70px; color: #a3191b; border: 3px double currentColor; padding: 3px 10px; font: 700 16px/1 var(--type); letter-spacing: .1em; transform: rotate(-10deg); opacity: .85; animation: slam .42s cubic-bezier(.2,1.6,.4,1) .2s both; }
+.logon .codebox { display: flex; gap: 6px; }
+.logon .codebox .field { flex: 1; min-width: 0; font: 15px/1 var(--type); letter-spacing: .08em; text-transform: uppercase; }
+.logon .or { display: flex; align-items: center; gap: 8px; color: #555; font-size: 11px; margin: 4px 0; }
+.logon .or::before, .logon .or::after { content: ""; flex: 1; border-top: 1px solid var(--shadow); border-bottom: 1px solid var(--hi); }
+.logon .cerr { color: var(--bad); font-size: 11.5px; min-height: 15px; }
 
 /* ---------- case closed stamp ---------- */
 #stamp { position: fixed; inset: 0; z-index: 9550; display: grid; place-items: center; pointer-events: none; background: rgba(20,10,5,.35); }
@@ -615,9 +730,6 @@ body.busy, body.busy * { cursor: progress !important; }
 <section class="win raised" id="w-qa" data-title="Query Analyzer - HBPD_RECORDS" data-icon="qa" hidden style="left:110px;top:16px;width:min(1040px,calc(100vw - 130px));height:calc(100% - 56px)">
   <div class="winbody">
     <div class="qa-toolbar">
-      <button class="btn" id="runbtn" title="Run (F5 or Ctrl+Enter)"><svg viewBox="0 0 14 14"><path d="M3 2l9 5-9 5z" fill="#1d7a2e"/></svg><b>Run</b></button>
-      <button class="btn" id="clearbtn">Clear</button>
-      <span class="sepv"></span>
       <label for="caseSel">Case <select id="caseSel" class="field"></select></label>
       <span class="sepv"></span>
       <button class="btn" id="resetbtn" title="Put every table back the way it started">Reset DB</button>
@@ -645,6 +757,11 @@ body.busy, body.busy * { cursor: progress !important; }
         <div class="colinfo" id="colinfo" hidden></div>
         <div class="editor-wrap">
           <textarea id="sql" spellcheck="false" autocomplete="off" autocapitalize="off" placeholder="-- Type a query here, then press Run (F5 or Ctrl+Enter)&#10;SELECT * FROM staff;"></textarea>
+        </div>
+        <div class="editbar">
+          <button class="btn primary" id="runbtn" title="Run (F5 or Ctrl+Enter)"><svg viewBox="0 0 14 14"><path d="M3 2l9 5-9 5z" fill="#1d7a2e"/></svg><b>Run</b></button>
+          <button class="btn" id="clearbtn">Clear</button>
+          <span class="kbd">F5 or Ctrl+Enter to run · select text to run part of it</span>
         </div>
         <div class="results sunken" id="results"><div class="msg">Results appear here. Pick a task on the left, write your query above, and press <b>Run</b>.</div></div>
       </div>
@@ -696,6 +813,29 @@ body.busy, body.busy * { cursor: progress !important; }
   <div class="winbody"><div class="notepad sunken" id="textBody"></div></div>
 </section>
 
+<!-- Harrow Reader -->
+<section class="win raised" id="w-reader" data-title="Harrow Reader" data-icon="pdf" hidden style="left:220px;top:20px;width:min(700px,calc(100vw - 240px));height:calc(100% - 56px)">
+  <div class="menubar"><span><u>F</u>ile</span><span><u>E</u>dit</span><span><u>V</u>iew</span><span><u>D</u>ocument</span><span><u>H</u>elp</span></div>
+  <div class="reader-tb"><button class="btn" id="zoomOut" aria-label="Zoom out">-</button><select class="field" id="zoomSel" aria-label="Zoom"><option value="0.75">75%</option><option value="1" selected>100%</option><option value="1.25">125%</option></select><button class="btn" id="zoomIn" aria-label="Zoom in">+</button><span class="sepv"></span><span class="pg">Page 1 of 1</span></div>
+  <div class="winbody"><div class="reader-view sunken" id="readerView"></div></div>
+  <div class="statusbar"><div id="readerStatus">Ready</div><div class="fit" id="readerSize">8.5 x 11 in</div></div>
+</section>
+
+<!-- My Documents -->
+<section class="win raised" id="w-docs" data-title="My Documents" data-icon="docs" hidden style="left:190px;top:50px;width:min(520px,calc(100vw - 210px));height:min(360px,calc(100% - 90px))">
+  <div class="menubar"><span><u>F</u>ile</span><span><u>E</u>dit</span><span><u>V</u>iew</span><span><u>H</u>elp</span></div>
+  <div class="addr">Address <div class="field sunken mono">C:\My Documents\Case Evidence</div></div>
+  <div class="winbody"><div class="explorer sunken" id="docsBody"></div></div>
+  <div class="statusbar"><div id="docsStatus">0 object(s)</div></div>
+</section>
+
+<!-- Records Ledger -->
+<section class="win raised" id="w-ledger" data-title="Records Ledger - Data Dictionary" data-icon="ledger" hidden style="left:170px;top:36px;width:min(860px,calc(100vw - 190px));height:min(560px,calc(100% - 76px))">
+  <div class="menubar"><span><u>F</u>ile</span><span><u>V</u>iew</span><span><u>H</u>elp</span></div>
+  <div class="winbody"><div class="ledger"><div class="ltree sunken" id="ltree"></div><div class="lpage sunken" id="lpage"></div></div></div>
+  <div class="statusbar"><div id="ledgerStatus">Ready</div><div class="fit">Structure only · no case data</div></div>
+</section>
+
 <!-- Evidence Board -->
 <section class="win raised" id="w-board" data-title="Evidence Board" data-icon="board" hidden style="left:130px;top:24px;width:min(1004px,calc(100vw - 150px));height:min(640px,calc(100% - 64px))">
   <div class="winbody"><div class="boardwrap sunken"><div class="board" id="board"></div></div></div>
@@ -734,14 +874,15 @@ body.busy, body.busy * { cursor: progress !important; }
 <div id="stamp" hidden></div>
 <div id="saver" hidden><canvas id="saverCanvas"></canvas></div>
 
+<div id="logon" hidden></div>
 <div class="overlay" id="boot" hidden></div>
 <div class="overlay" id="splash" hidden><div class="logo"><svg viewBox="0 0 32 32" id="splashIcon"></svg><h1>Harrow<i>OS</i> 98</h1><p>Harrow Bay Police Department - Records Division</p><div class="bar"><i></i></div></div></div>
 <div class="overlay" id="bsod" hidden></div>
 <div class="overlay" id="shutdown" hidden>It's now safe to turn off<br>your computer.<br><br><small style="font-size:20px;color:#b9852a">Click to turn it back on</small></div>
 
 <script>
-const SEED_SQL = "CREATE TABLE staff (\n  staff_id INTEGER PRIMARY KEY,\n  first_name TEXT NOT NULL,\n  last_name TEXT NOT NULL,\n  department TEXT NOT NULL,\n  job_title TEXT NOT NULL,\n  hire_date TEXT NOT NULL,\n  badge_id TEXT UNIQUE NOT NULL,\n  phone_ext INTEGER\n);\nINSERT INTO staff VALUES\n(1,'Ruth','Mallory','Command','Chief of Police','1984-03-12','B-0001',100),\n(2,'Adrian','Holt','Command','Deputy Chief','1989-06-05','B-0002',101),\n(3,'Walter','Briggs','Records','Records Supervisor','1987-01-26','B-0310',210),\n(4,'Dana','Pike','Records','Records Clerk','1996-02-19','B-1107',211),\n(5,'Elena','Voss','Records','Temporary Data Analyst','2001-08-06','B-2290',214),\n(6,'New','Temp','Records','Temporary Data Analyst','2001-11-12','B-2301',215),\n(7,'Gary','Fenwick','IT','IT Manager','1993-04-19','B-0522',300),\n(8,'Priya','Sandoval','IT','Network Administrator','1999-05-03','B-1830',301),\n(9,'Ines','Duarte','IT','Help Desk Technician','2000-10-02','B-2014',302),\n(10,'Markus','Kessler','Y2K Task Force','Systems Consultant','1998-09-14','B-0471',399),\n(11,'Frank','Moreno','Detectives','Detective Sergeant','1986-07-21','B-0208',400),\n(12,'Sam','Okafor','Detectives','Detective','1991-11-04','B-0655',401),\n(13,'Lucy','Tran','Detectives','Detective','1995-08-28','B-0989',402),\n(14,'Tom','Reilly','Patrol','Patrol Officer','1990-02-12','B-0601',500),\n(15,'Ben','Haskins','Patrol','Patrol Officer','1997-06-30','B-1240',501),\n(16,'Maria','Lindqvist','Patrol','Patrol Officer','2000-01-17','B-1955',502),\n(17,'Kevin','Marsh','Patrol','Patrol Officer','2001-03-01','B-2150',503),\n(18,'Carol','Whitby','Finance','Accountant','1992-09-08','B-0733',600),\n(19,'Henry','Dawes','Finance','Purchasing Officer','1994-05-16','B-0870',601),\n(20,'Rosa','Klein','Evidence','Evidence Custodian','1988-10-03','B-0377',700),\n(21,'Janet','Cole','Dispatch','Dispatcher','1999-03-22','B-1702',800),\n(22,'Owen','Price','Dispatch','Dispatcher','2000-06-12','B-1988',801);\n\nCREATE TABLE badge_log (\n  log_id INTEGER PRIMARY KEY,\n  badge_id TEXT NOT NULL,\n  room TEXT NOT NULL,\n  entry_time TEXT NOT NULL,\n  exit_time TEXT\n);\nINSERT INTO badge_log VALUES\n(1,'B-0001','Squad Room','2001-11-08 07:58','2001-11-08 18:05'),\n(2,'B-0522','Server Room','2001-11-08 09:12','2001-11-08 10:40'),\n(3,'B-2290','Records Room','2001-11-08 08:50','2001-11-08 17:32'),\n(4,'B-0870','Finance Office','2001-11-08 09:01','2001-11-08 16:55'),\n(5,'B-0377','Evidence Locker','2001-11-08 10:15','2001-11-08 11:02'),\n(6,'B-0522','Server Room','2001-11-08 22:30','2001-11-08 23:10'),\n(7,'B-0001','Squad Room','2001-11-09 08:02','2001-11-09 18:11'),\n(8,'B-2290','Records Room','2001-11-09 08:55','2001-11-09 17:40'),\n(9,'B-0310','Records Room','2001-11-09 09:00','2001-11-09 17:00'),\n(10,'B-1830','Server Room','2001-11-09 09:30','2001-11-09 12:15'),\n(11,'B-0655','Squad Room','2001-11-09 10:20','2001-11-09 19:45'),\n(12,'B-0733','Finance Office','2001-11-09 08:45','2001-11-09 17:10'),\n(13,'B-2290','Server Room','2001-11-09 18:02','2001-11-09 18:31'),\n(14,'B-2290','Records Room','2001-11-09 18:35','2001-11-09 21:15'),\n(15,'B-1107','Records Room','2001-11-09 19:10','2001-11-09 22:41'),\n(16,'B-1107','Server Room','2001-11-09 22:44','2001-11-09 23:02'),\n(17,'B-0002','Main Entrance','2001-11-09 23:30','2001-11-09 23:58'),\n(18,'B-0471','Server Room','2001-11-09 23:47',NULL),\n(19,'B-1702','Dispatch Desk','2001-11-09 22:00','2001-11-10 06:00'),\n(20,'B-0601','Squad Room','2001-11-10 07:55','2001-11-10 16:20'),\n(21,'B-1988','Dispatch Desk','2001-11-10 06:00','2001-11-10 14:00'),\n(22,'B-0001','Squad Room','2001-11-12 07:50',NULL),\n(23,'B-0310','Records Room','2001-11-12 08:30',NULL),\n(24,'B-2301','Records Room','2001-11-12 08:58',NULL),\n(25,'B-1830','Server Room','2001-11-12 09:05','2001-11-12 09:40');\n\nCREATE TABLE case_records (\n  case_no TEXT PRIMARY KEY,\n  title TEXT NOT NULL,\n  opened_on TEXT NOT NULL,\n  outcome TEXT NOT NULL CHECK (outcome IN ('Open','Charged','Dismissed','Closed - no charges')),\n  modified_by TEXT NOT NULL,\n  modified_on TEXT NOT NULL\n);\nINSERT INTO case_records VALUES\n('1988-0215','Stolen boat, Pier 4','1988-02-15','Charged','MIGRATION','1999-11-20'),\n('1991-0730','Burglary, Elm Street pharmacy','1991-07-30','Charged','MIGRATION','1999-11-20'),\n('1993-0112','Missing person, J. Arden','1993-01-12','Open','MIGRATION','1999-11-20'),\n('1994-0331','Warehouse fire, Dock 7','1994-03-31','Closed - no charges','MKESSLER','1999-12-31'),\n('1995-1009','Assault, Harbor Tavern','1995-10-09','Dismissed','MIGRATION','1999-11-21'),\n('1996-0520','Car theft ring, east side','1996-05-20','Charged','MIGRATION','1999-11-21'),\n('1997-0418','Invoice fraud, Port Authority','1997-04-18','Closed - no charges','MKESSLER','1999-12-31'),\n('1998-0611','Vandalism, City Hall','1998-06-11','Dismissed','MIGRATION','1999-11-22'),\n('1998-1102','Bribery complaint, city contracts','1998-11-02','Closed - no charges','MKESSLER','1999-12-31'),\n('1999-0907','Theft of server equipment','1999-09-07','Closed - no charges','MKESSLER','1999-12-31'),\n('1999-1015','Fraud, Seaside Credit Union','1999-10-15','Charged','MIGRATION','1999-11-22'),\n('2000-0001','Y2K compliance test record','2000-01-01','Closed - no charges','MKESSLER','2000-01-01'),\n('2000-0314','Hit and run, Route 9','2000-03-14','Open','WBRIGGS','2000-03-15'),\n('2001-0622','Pickpocketing, ferry terminal','2001-06-22','Charged','DPIKE','2001-06-25');\n";
-const CASES = [{"id": 1, "title": "The Logged-In Machine", "disk": "BASICS.DSK", "tool": "The Magnifying Glass", "keywords": ["SELECT", "FROM", "ORDER BY", "LIMIT", "DISTINCT"], "tables": ["staff"], "email": {"from": "Chief Ruth Mallory", "subject": "Case 1: Welcome to the basement", "date": "Mon 12/11/2001 08:41", "body": "<p>Welcome aboard. You're replacing Elena Voss, our last temp. She stopped showing up on Friday and isn't answering her phone. HR says it happens with temps. I'm not so sure.</p><p>Your job is the records cleanup after the Y2K migration. Before you start, get to know the building. Open <b>Query Analyzer</b> and look at the <b>staff</b> table. That's everyone who works here.</p><p>One odd thing: HR tells me the <b>Y2K Task Force</b> was shut down in January 2000. Everyone in it was moved to other departments. Check the staff table and tell me if anyone is still listed there.</p><p>Insert the BASICS.DSK floppy first. The little disk fellow will show you around.</p><p>Ruth Mallory<br>Chief of Police, Harrow Bay PD</p>"}, "intro": "Hi! I'm Disko. This disk teaches SELECT, the magnifying glass of SQL. You'll use it to read any table in the building.", "lessons": [{"title": "A table is a grid", "body": "<p>A database keeps information in <b>tables</b>. A table looks like a spreadsheet: every <b>row</b> is one thing (here, one employee), and every <b>column</b> is one fact about it (name, department, hire date).</p><p>To read a table, you write a <b>query</b>. The star <code>*</code> means \"every column\".</p>", "example": "SELECT * FROM staff;"}, {"title": "Pick only the columns you need", "body": "<p>Instead of <code>*</code>, list the columns you want, separated by commas. The order you write them is the order they appear.</p><p>SQL doesn't care about upper or lower case for keywords, but writing <code>SELECT</code> in capitals makes queries easier to read.</p>", "example": "SELECT first_name, last_name, department\nFROM staff;"}, {"title": "Sort with ORDER BY", "body": "<p><code>ORDER BY</code> sorts the rows. It sorts from smallest to largest (A to Z, oldest to newest) unless you add <code>DESC</code> for descending.</p><p>Dates here are written <code>YYYY-MM-DD</code>, so they sort correctly as text.</p>", "example": "SELECT last_name, hire_date\nFROM staff\nORDER BY hire_date DESC;"}, {"title": "Only the top few: LIMIT", "body": "<p><code>LIMIT</code> keeps just the first rows of the result. It always comes last. Combined with <code>ORDER BY</code> it answers questions like \"who are the three newest employees?\"</p>", "example": "SELECT last_name, hire_date\nFROM staff\nORDER BY hire_date\nLIMIT 3;"}, {"title": "No repeats: DISTINCT", "body": "<p><code>DISTINCT</code> removes duplicate rows. Ask for the department of every employee and you'll see \"Patrol\" four times. Add <code>DISTINCT</code> and each department shows once.</p>", "example": "SELECT DISTINCT department\nFROM staff;"}], "practice": [{"id": "1p1", "text": "Show every column and every row of the <b>staff</b> table.", "solution": "SELECT * FROM staff;", "hints": ["Use the star to mean \"all columns\".", "SELECT * FROM ...", "SELECT * FROM staff;"]}, {"id": "1p2", "text": "Show only <b>first_name</b>, <b>last_name</b> and <b>job_title</b> for everyone.", "solution": "SELECT first_name, last_name, job_title FROM staff;", "hints": ["List the three column names after SELECT.", "Separate the columns with commas.", "SELECT first_name, last_name, job_title FROM staff;"]}, {"id": "1p3", "text": "Show <b>last_name</b> and <b>hire_date</b>, sorted from the oldest hire to the newest.", "solution": "SELECT last_name, hire_date FROM staff ORDER BY hire_date;", "ordered": true, "hints": ["You need ORDER BY.", "Oldest first is the normal (ascending) order, so you don't need DESC.", "SELECT last_name, hire_date FROM staff ORDER BY hire_date;"]}, {"id": "1p4", "text": "Show <b>last_name</b> and <b>hire_date</b> of the <b>3 most recently hired</b> people.", "solution": "SELECT last_name, hire_date FROM staff ORDER BY hire_date DESC LIMIT 3;", "hints": ["Sort newest first, then keep only a few rows.", "ORDER BY hire_date DESC, then LIMIT.", "SELECT last_name, hire_date FROM staff ORDER BY hire_date DESC LIMIT 3;"]}, {"id": "1p5", "text": "Show each <b>job_title</b> only once.", "solution": "SELECT DISTINCT job_title FROM staff;", "hints": ["There's a keyword that removes repeats.", "Put DISTINCT right after SELECT.", "SELECT DISTINCT job_title FROM staff;"]}], "investigate": [{"id": "1i1", "text": "List every department once, in alphabetical order. Is the Y2K Task Force still there?", "solution": "SELECT DISTINCT department FROM staff ORDER BY department;", "ordered": true, "hints": ["You need two tools from this disk: one removes repeats, one sorts.", "SELECT DISTINCT department FROM staff ORDER BY ...", "SELECT DISTINCT department FROM staff ORDER BY department;"], "found": "The Y2K Task Force still exists in the staff table, nearly two years after it was shut down."}, {"id": "1i2", "text": "Show <b>first_name</b>, <b>last_name</b> and <b>department</b> for everyone, sorted by department, so people in the same department sit together.", "solution": "SELECT first_name, last_name, department FROM staff ORDER BY department;", "hints": ["Pick three columns, then sort.", "ORDER BY department", "SELECT first_name, last_name, department FROM staff ORDER BY department;"], "found": "Scroll to the bottom. One person is still in the Y2K Task Force."}, {"id": "1i3", "text": "Who were the <b>2 most recent hires</b>? Show first_name, last_name and hire_date.", "solution": "SELECT first_name, last_name, hire_date FROM staff ORDER BY hire_date DESC LIMIT 2;", "hints": ["Same trick as practice task 4.", "ORDER BY hire_date DESC LIMIT 2", "SELECT first_name, last_name, hire_date FROM staff ORDER BY hire_date DESC LIMIT 2;"], "found": "That's you, hired today, and Elena, hired in August. She only worked here three months."}], "final": {"question": "Who is still listed in the closed Y2K Task Force? Type their last name.", "answers": ["kessler", "markus kessler", "m. kessler", "m kessler"], "clue": "Markus Kessler (badge B-0471) is still listed in the Y2K Task Force, a department shut down in January 2000.", "messenger": ["hey. you found kessler.", "he isn't supposed to be here anymore. but he still has a badge.", "check where that badge went on friday night."]}}, {"id": 2, "title": "The Badge Reader", "disk": "FILTER.DSK", "tool": "The Fingerprint Filter", "keywords": ["WHERE", "AND / OR", "IN", "BETWEEN", "LIKE", "IS NULL"], "tables": ["staff", "badge_log"], "email": {"from": "Chief Ruth Mallory", "subject": "Case 2: Friday night", "date": "Mon 12/11/2001 11:15", "body": "<p>Kessler? He was on the migration team. I thought he left with the contractor.</p><p>I've unlocked the <b>badge_log</b> table for you. Every time someone swipes a badge, the reader records the badge number, the room, and when they came in and went out. If they haven't swiped out yet, the exit time is empty.</p><p>Elena worked late on Friday 9 November. I want to know who was in the <b>Server Room</b> that night after 22:00, and whether anyone went in and never came out.</p><p>You'll need FILTER.DSK. Reading the whole log row by row will take you all week.</p><p>Ruth</p>"}, "intro": "FILTER.DSK! This one is my favourite. WHERE lets you keep only the rows you care about, like dusting for fingerprints.", "lessons": [{"title": "Keep only matching rows: WHERE", "body": "<p><code>WHERE</code> comes after <code>FROM</code> and keeps only rows where the condition is true. Text goes in <b>single quotes</b>. Numbers don't need quotes.</p><p>Comparison signs: <code>=</code> <code>&lt;&gt;</code> (not equal) <code>&gt;</code> <code>&lt;</code> <code>&gt;=</code> <code>&lt;=</code>.</p>", "example": "SELECT first_name, last_name\nFROM staff\nWHERE department = 'IT';"}, {"title": "Combine conditions: AND, OR", "body": "<p><code>AND</code> means both conditions must be true. <code>OR</code> means at least one. When you mix them, add brackets so SQL reads them the way you mean.</p><p>Times in badge_log look like <code>'2001-11-09 22:44'</code>, so you can compare them like text.</p>", "example": "SELECT *\nFROM badge_log\nWHERE room = 'Records Room'\n  AND entry_time > '2001-11-09 18:00';"}, {"title": "A list of options: IN", "body": "<p><code>IN</code> is a shortcut for many ORs. <code>department IN ('IT', 'Finance')</code> means the same as <code>department = 'IT' OR department = 'Finance'</code>.</p>", "example": "SELECT first_name, last_name, department\nFROM staff\nWHERE department IN ('IT', 'Finance');"}, {"title": "A range: BETWEEN", "body": "<p><code>BETWEEN a AND b</code> keeps values from a to b, <b>including</b> both ends. It works for numbers, dates and times.</p>", "example": "SELECT last_name, hire_date\nFROM staff\nWHERE hire_date BETWEEN '1990-01-01' AND '1995-12-31';"}, {"title": "Partial matches: LIKE", "body": "<p><code>LIKE</code> searches text with wildcards. <code>%</code> means \"any number of characters\" and <code>_</code> means \"exactly one character\".</p><p><code>'D%'</code> finds text starting with D. <code>'%son'</code> finds text ending in son.</p>", "example": "SELECT first_name, last_name\nFROM staff\nWHERE first_name LIKE 'D%';"}, {"title": "Missing values: IS NULL", "body": "<p><b>NULL</b> means \"no value\": not zero, not empty text, just unknown. Because it's unknown, <code>exit_time = NULL</code> never matches anything. Always write <code>IS NULL</code> or <code>IS NOT NULL</code>.</p>", "example": "SELECT *\nFROM badge_log\nWHERE exit_time IS NOT NULL\nLIMIT 5;"}], "practice": [{"id": "2p1", "text": "Show all columns of every swipe into the <b>Server Room</b>.", "solution": "SELECT * FROM badge_log WHERE room = 'Server Room';", "hints": ["Filter the badge_log table on the room column.", "WHERE room = '...'  (mind the capital letters)", "SELECT * FROM badge_log WHERE room = 'Server Room';"]}, {"id": "2p2", "text": "Show all columns of every swipe whose <b>entry_time</b> is on <b>9 November 2001</b>.", "solution": "SELECT * FROM badge_log WHERE entry_time BETWEEN '2001-11-09 00:00' AND '2001-11-09 23:59';", "hints": ["You want a range of times within one day.", "BETWEEN '2001-11-09 00:00' AND '2001-11-09 23:59' (LIKE '2001-11-09%' works too)", "SELECT * FROM badge_log WHERE entry_time BETWEEN '2001-11-09 00:00' AND '2001-11-09 23:59';"]}, {"id": "2p3", "text": "Show <b>first_name</b> and <b>last_name</b> of staff whose last name starts with <b>K</b>.", "solution": "SELECT first_name, last_name FROM staff WHERE last_name LIKE 'K%';", "hints": ["This is a partial match.", "LIKE with the % wildcard", "SELECT first_name, last_name FROM staff WHERE last_name LIKE 'K%';"]}, {"id": "2p4", "text": "Show <b>first_name</b>, <b>last_name</b> and <b>department</b> of everyone in <b>Patrol</b> or <b>Dispatch</b>.", "solution": "SELECT first_name, last_name, department FROM staff WHERE department IN ('Patrol', 'Dispatch');", "hints": ["Two possible values: use OR or a list.", "department IN ('Patrol', 'Dispatch')", "SELECT first_name, last_name, department FROM staff WHERE department IN ('Patrol', 'Dispatch');"]}, {"id": "2p5", "text": "Show all columns of every swipe that has <b>no exit time</b>.", "solution": "SELECT * FROM badge_log WHERE exit_time IS NULL;", "hints": ["A missing value is NULL.", "= NULL never works. Use IS NULL.", "SELECT * FROM badge_log WHERE exit_time IS NULL;"]}], "investigate": [{"id": "2i1", "text": "Show all columns of every <b>Server Room</b> swipe on the night of <b>9 November</b> that started after <b>22:00</b>. Careful: \"after 22:00 on the 9th\" should not include the following days.", "solution": "SELECT * FROM badge_log WHERE room = 'Server Room' AND entry_time BETWEEN '2001-11-09 22:00' AND '2001-11-09 23:59';", "hints": ["You need two conditions joined with AND.", "Bound the time on both sides: BETWEEN '2001-11-09 22:00' AND '2001-11-09 23:59'", "SELECT * FROM badge_log WHERE room = 'Server Room' AND entry_time BETWEEN '2001-11-09 22:00' AND '2001-11-09 23:59';"], "found": "Two badges went into the Server Room late that night: B-1107 and B-0471. One of them never swiped out."}, {"id": "2i2", "text": "Whose badges are <b>B-1107</b> and <b>B-0471</b>? Show first_name, last_name and badge_id.", "solution": "SELECT first_name, last_name, badge_id FROM staff WHERE badge_id IN ('B-1107', 'B-0471');", "hints": ["Badge numbers live in the staff table.", "WHERE badge_id IN (...)", "SELECT first_name, last_name, badge_id FROM staff WHERE badge_id IN ('B-1107', 'B-0471');"], "found": "Dana Pike, the records clerk, left at 23:02. Markus Kessler went in at 23:47 and the log never saw him leave."}, {"id": "2i3", "text": "Elena's badge is <b>B-2290</b>. Show her swipe with the latest exit time. (Use a tool from BASICS.DSK.)", "solution": "SELECT * FROM badge_log WHERE badge_id = 'B-2290' ORDER BY exit_time DESC LIMIT 1;", "hints": ["Filter on her badge, then sort.", "ORDER BY exit_time DESC LIMIT 1", "SELECT * FROM badge_log WHERE badge_id = 'B-2290' ORDER BY exit_time DESC LIMIT 1;"], "found": "Elena left the Records Room at 21:15. She was gone before Kessler arrived. Or was she?"}], "final": {"question": "At what time did Kessler's badge enter the Server Room and never come out? Type it like 12:34.", "answers": ["23:47", "2001-11-09 23:47", "11:47 pm", "11:47pm", "23.47"], "clue": "Kessler's badge entered the Server Room at 23:47 on Friday 9 November and never swiped out. Dana Pike was there earlier but left at 23:02.", "messenger": ["23:47. i remember the door.", "dana pike is ok. she was pulling paper files for me.", "the paper files are the proof. the database lies."]}}, {"id": 3, "title": "The Paper Files", "disk": "BUILDER.DSK", "tool": "The Case File Kit", "keywords": ["CREATE TABLE", "INSERT", "UPDATE", "DELETE", "constraints"], "tables": ["staff", "badge_log", "case_records"], "email": {"from": "Chief Ruth Mallory", "subject": "Case 3: A box from Dana", "date": "Mon 12/11/2001 15:02", "body": "<p>Dana Pike came to see me. Elena asked her on Friday to pull four old paper case files from the archive. Dana left them on Elena's desk. They're on yours now.</p><p>The box says:</p><table class=\"paper\"><tr><th>Case no.</th><th>Title</th><th>Paper file says</th></tr><tr><td>1994-0331</td><td>Warehouse fire, Dock 7</td><td>Charged</td></tr><tr><td>1997-0418</td><td>Invoice fraud, Port Authority</td><td>Charged</td></tr><tr><td>1998-1102</td><td>Bribery complaint, city contracts</td><td>Open</td></tr><tr><td>1999-0907</td><td>Theft of server equipment</td><td>Charged</td></tr></table><p>I've unlocked <b>case_records</b>. Compare these four with the database. If the database is wrong, fix it. You have my authorisation.</p><p>And start a proper suspects list. In a table, not on a sticky note.</p><p>Ruth</p>"}, "intro": "BUILDER.DSK lets you change the database, not just read it. Big power, big responsibility. If you break something, the Reset DB button puts everything back.", "lessons": [{"title": "Build a table: CREATE TABLE", "body": "<p><code>CREATE TABLE</code> makes a new, empty table. You give every column a name and a <b>type</b>: <code>INTEGER</code> for whole numbers, <code>TEXT</code> for words, and so on.</p><p><code>PRIMARY KEY</code> marks the column that identifies each row. No two rows can share it.</p><p>(In PostgreSQL you'd often write <code>VARCHAR(100)</code>, <code>DATE</code> or <code>SERIAL</code>. The idea is the same.)</p>", "example": "CREATE TABLE witnesses (\n  witness_id INTEGER PRIMARY KEY,\n  name TEXT NOT NULL,\n  phone TEXT\n);"}, {"title": "Add rows: INSERT", "body": "<p><code>INSERT INTO</code> adds a row. List the columns, then the values in the same order. If you leave out an <code>INTEGER PRIMARY KEY</code>, the database picks the next number for you.</p>", "example": "INSERT INTO witnesses (name, phone)\nVALUES ('Dock worker, night shift', '555-0192');"}, {"title": "Rules the data must follow: constraints", "body": "<p><b>Constraints</b> stop bad data getting in. <code>NOT NULL</code> means the column must have a value. <code>UNIQUE</code> means no repeats. <code>CHECK</code> tests a rule, like \"outcome must be one of these four words\".</p><p>If you break a rule, the database refuses the whole statement. That's a feature, not a bug.</p>", "example": "INSERT INTO witnesses (phone)\nVALUES ('555-0000');\n-- This fails: name is NOT NULL"}, {"title": "Change rows: UPDATE", "body": "<p><code>UPDATE</code> changes values in rows that match a <code>WHERE</code>. <b>Always write the WHERE first.</b> An UPDATE without WHERE changes every row in the table.</p><p>Tip: run a SELECT with the same WHERE first, to see which rows you're about to change.</p>", "example": "UPDATE witnesses\nSET phone = '555-0193'\nWHERE name = 'Dock worker, night shift';"}, {"title": "Remove rows: DELETE", "body": "<p><code>DELETE FROM</code> removes rows that match the <code>WHERE</code>. Same rule: without WHERE it empties the whole table.</p><p><code>DROP TABLE</code> deletes the table itself, structure and all.</p>", "example": "DELETE FROM witnesses\nWHERE witness_id = 1;"}], "practice": [{"id": "3p1", "type": "check", "text": "Create a table called <b>suspects</b> with three columns: <b>suspect_id</b> (INTEGER PRIMARY KEY), <b>name</b> (TEXT, NOT NULL) and <b>reason</b> (TEXT).", "solution": "CREATE TABLE suspects (suspect_id INTEGER PRIMARY KEY, name TEXT NOT NULL, reason TEXT);", "check": "SELECT (SELECT count(*) FROM pragma_table_info('suspects') WHERE name IN ('suspect_id','name','reason')) = 3", "hints": ["CREATE TABLE suspects ( ... );", "Each column is name, then type, separated by commas.", "CREATE TABLE suspects (suspect_id INTEGER PRIMARY KEY, name TEXT NOT NULL, reason TEXT);"]}, {"id": "3p2", "type": "check", "text": "Add <b>Markus Kessler</b> to suspects, with a reason such as 'Badge entered server room 23:47, never left'.", "solution": "INSERT INTO suspects (name, reason) VALUES ('Markus Kessler', 'Badge entered server room 23:47, never left');", "check": "SELECT EXISTS (SELECT 1 FROM suspects WHERE name LIKE '%Kessler%')", "hints": ["INSERT INTO suspects (name, reason) VALUES (...);", "Text values go in single quotes.", "INSERT INTO suspects (name, reason) VALUES ('Markus Kessler', 'Badge entered server room 23:47, never left');"]}, {"id": "3p3", "type": "check", "text": "Add <b>Dana Pike</b> to suspects too, with the reason 'In server room Friday night'.", "solution": "INSERT INTO suspects (name, reason) VALUES ('Dana Pike', 'In server room Friday night');", "check": "SELECT EXISTS (SELECT 1 FROM suspects WHERE name LIKE '%Pike%')", "hints": ["Same as the last task, different values.", "INSERT INTO suspects (name, reason) VALUES ('Dana Pike', ...);", "INSERT INTO suspects (name, reason) VALUES ('Dana Pike', 'In server room Friday night');"]}, {"id": "3p4", "type": "check", "text": "The Chief vouches for Dana. <b>Update</b> her reason to 'Cleared - pulled files for Elena'.", "solution": "UPDATE suspects SET reason = 'Cleared - pulled files for Elena' WHERE name = 'Dana Pike';", "check": "SELECT EXISTS (SELECT 1 FROM suspects WHERE name LIKE '%Pike%' AND reason LIKE 'Cleared%') AND NOT EXISTS (SELECT 1 FROM suspects WHERE name LIKE '%Kessler%' AND reason LIKE 'Cleared%')", "hints": ["UPDATE suspects SET reason = ... WHERE ...;", "Don't forget the WHERE, or Kessler gets cleared too!", "UPDATE suspects SET reason = 'Cleared - pulled files for Elena' WHERE name = 'Dana Pike';"]}, {"id": "3p5", "type": "check", "text": "Cleared people don't belong on a suspects list. <b>Delete</b> Dana's row, and keep Kessler's.", "solution": "DELETE FROM suspects WHERE name = 'Dana Pike';", "check": "SELECT NOT EXISTS (SELECT 1 FROM suspects WHERE name LIKE '%Pike%') AND EXISTS (SELECT 1 FROM suspects WHERE name LIKE '%Kessler%')", "hints": ["DELETE FROM suspects WHERE ...;", "Match her name exactly as you inserted it.", "DELETE FROM suspects WHERE name = 'Dana Pike';"]}], "investigate": [{"id": "3i1", "text": "Show all columns from <b>case_records</b> for the four case numbers in Dana's box: 1994-0331, 1997-0418, 1998-1102 and 1999-0907.", "solution": "SELECT * FROM case_records WHERE case_no IN ('1994-0331', '1997-0418', '1998-1102', '1999-0907');", "hints": ["A list of four values: you learned this on FILTER.DSK.", "WHERE case_no IN ('1994-0331', ...)", "SELECT * FROM case_records WHERE case_no IN ('1994-0331', '1997-0418', '1998-1102', '1999-0907');"], "found": "All four say 'Closed - no charges' in the database. The paper files disagree. And look at who modified them, and when."}, {"id": "3i2", "type": "check", "text": "Fix the four records so <b>outcome</b> matches the paper files: three are 'Charged', 1998-1102 is 'Open'. The spelling must be exact: the table has a CHECK rule.", "solution": "UPDATE case_records SET outcome = 'Charged' WHERE case_no IN ('1994-0331', '1997-0418', '1999-0907');\nUPDATE case_records SET outcome = 'Open' WHERE case_no = '1998-1102';", "check": "SELECT (SELECT count(*) FROM case_records WHERE (case_no IN ('1994-0331','1997-0418','1999-0907') AND outcome = 'Charged') OR (case_no = '1998-1102' AND outcome = 'Open')) = 4 AND (SELECT count(*) FROM case_records WHERE outcome = 'Charged') = 8", "hints": ["You need two UPDATE statements: one for 'Charged', one for 'Open'.", "UPDATE case_records SET outcome = 'Charged' WHERE case_no IN (...);", "UPDATE case_records SET outcome = 'Charged' WHERE case_no IN ('1994-0331', '1997-0418', '1999-0907');\nUPDATE case_records SET outcome = 'Open' WHERE case_no = '1998-1102';"], "found": "The truth is back in the database. A warehouse fire, an invoice fraud, a bribery complaint and stolen servers, all buried by one login."}, {"id": "3i3", "type": "check", "text": "MKESSLER also slipped in a fake record. Find the one he <b>created in 2000</b> (look at opened_on), then <b>delete</b> it. Only that one.", "solution": "DELETE FROM case_records WHERE case_no = '2000-0001';", "check": "SELECT NOT EXISTS (SELECT 1 FROM case_records WHERE case_no = '2000-0001') AND (SELECT count(*) FROM case_records) = 13", "hints": ["First find it: SELECT * FROM case_records WHERE modified_by = 'MKESSLER';", "Then DELETE FROM case_records WHERE case_no = '...';", "DELETE FROM case_records WHERE case_no = '2000-0001';"], "found": "A \"Y2K compliance test\" record. It existed only to make the edits look like routine testing."}], "final": {"question": "On what date did MKESSLER change the four case records? Type it as YYYY-MM-DD.", "answers": ["1999-12-31", "31.12.1999", "31/12/1999", "12/31/1999", "31-12-1999", "dec 31 1999", "december 31 1999", "31 december 1999", "new year's eve"], "clue": "On 31 December 1999, while everyone watched for the Y2K bug, MKESSLER changed four case outcomes to 'Closed - no charges' and planted a fake test record.", "messenger": ["new year's eve 1999. nobody checks logs at midnight.", "but who told kessler which cases to bury?", "follow the money. the migration invoices. i'll be in touch."]}}];
+const SEED_SQL = "CREATE TABLE staff (\n  staff_id INTEGER PRIMARY KEY,\n  first_name TEXT NOT NULL,\n  last_name TEXT NOT NULL,\n  department TEXT NOT NULL,\n  job_title TEXT NOT NULL,\n  hire_date TEXT NOT NULL,\n  badge_id TEXT UNIQUE NOT NULL,\n  phone_ext INTEGER\n);\nINSERT INTO staff VALUES\n(1,'Ruth','Mallory','Command','Chief of Police','1984-03-12','B-0001',100),\n(2,'Adrian','Holt','Command','Deputy Chief','1989-06-05','B-0002',101),\n(3,'Walter','Briggs','Records','Records Supervisor','1987-01-26','B-0310',210),\n(4,'Dana','Pike','Records','Records Clerk','1996-02-19','B-1107',211),\n(5,'Elena','Voss','Records','Temporary Data Analyst','2001-08-06','B-2290',214),\n(6,'New','Temp','Records','Temporary Data Analyst','2001-11-12','B-2301',215),\n(7,'Gary','Fenwick','IT','IT Manager','1993-04-19','B-0522',300),\n(8,'Priya','Sandoval','IT','Network Administrator','1999-05-03','B-1830',301),\n(9,'Ines','Duarte','IT','Help Desk Technician','2000-10-02','B-2014',302),\n(10,'Markus','Kessler','Y2K Task Force','Systems Consultant','1998-09-14','B-0471',999),\n(11,'Frank','Moreno','Detectives','Detective Sergeant','1986-07-21','B-0208',400),\n(12,'Sam','Okafor','Detectives','Detective','1991-11-04','B-0655',401),\n(13,'Lucy','Tran','Detectives','Detective','1995-08-28','B-0989',402),\n(14,'Tom','Reilly','Patrol','Patrol Officer','1990-02-12','B-0601',500),\n(15,'Ben','Haskins','Patrol','Patrol Officer','1997-06-30','B-1240',501),\n(16,'Maria','Lindqvist','Patrol','Patrol Officer','2000-01-17','B-1955',502),\n(17,'Kevin','Marsh','Patrol','Patrol Officer','2001-03-01','B-2150',503),\n(18,'Carol','Whitby','Finance','Accountant','1992-09-08','B-0733',600),\n(19,'Henry','Dawes','Finance','Purchasing Officer','1994-05-16','B-0870',601),\n(20,'Rosa','Klein','Evidence','Evidence Custodian','1988-10-03','B-0377',700),\n(21,'Janet','Cole','Dispatch','Dispatcher','1999-03-22','B-1702',800),\n(22,'Owen','Price','Dispatch','Dispatcher','2000-06-12','B-1988',801);\n\nCREATE TABLE badge_log (\n  log_id INTEGER PRIMARY KEY,\n  badge_id TEXT NOT NULL,\n  room TEXT NOT NULL,\n  entry_time TEXT NOT NULL,\n  exit_time TEXT\n);\nINSERT INTO badge_log VALUES\n(1,'B-0001','Squad Room','2001-11-08 07:58','2001-11-08 18:05'),\n(2,'B-0522','Server Room','2001-11-08 09:12','2001-11-08 10:40'),\n(3,'B-2290','Records Room','2001-11-08 08:50','2001-11-08 17:32'),\n(4,'B-0870','Finance Office','2001-11-08 09:01','2001-11-08 16:55'),\n(5,'B-0377','Evidence Locker','2001-11-08 10:15','2001-11-08 11:02'),\n(6,'B-0522','Server Room','2001-11-08 22:30','2001-11-08 23:10'),\n(7,'B-0001','Squad Room','2001-11-09 08:02','2001-11-09 18:11'),\n(8,'B-2290','Records Room','2001-11-09 08:55','2001-11-09 17:40'),\n(9,'B-0310','Records Room','2001-11-09 09:00','2001-11-09 17:00'),\n(10,'B-1830','Server Room','2001-11-09 09:30','2001-11-09 12:15'),\n(11,'B-0655','Squad Room','2001-11-09 10:20','2001-11-09 19:45'),\n(12,'B-0733','Finance Office','2001-11-09 08:45','2001-11-09 17:10'),\n(13,'B-2290','Server Room','2001-11-09 18:02','2001-11-09 18:31'),\n(14,'B-2290','Records Room','2001-11-09 18:35','2001-11-09 21:15'),\n(15,'B-1107','Records Room','2001-11-09 19:10','2001-11-09 22:41'),\n(16,'B-1107','Server Room','2001-11-09 22:44','2001-11-09 23:02'),\n(17,'B-0002','Main Entrance','2001-11-09 23:30','2001-11-09 23:58'),\n(18,'B-0471','Server Room','2001-11-09 23:47',NULL),\n(19,'B-1702','Dispatch Desk','2001-11-09 22:00','2001-11-10 06:00'),\n(20,'B-0601','Squad Room','2001-11-10 07:55','2001-11-10 16:20'),\n(21,'B-1988','Dispatch Desk','2001-11-10 06:00','2001-11-10 14:00'),\n(22,'B-0001','Squad Room','2001-11-12 07:50',NULL),\n(23,'B-0310','Records Room','2001-11-12 08:30',NULL),\n(24,'B-2301','Records Room','2001-11-12 08:58',NULL),\n(25,'B-1830','Server Room','2001-11-12 09:05','2001-11-12 09:40');\n\nCREATE TABLE case_records (\n  case_no TEXT PRIMARY KEY,\n  title TEXT NOT NULL,\n  opened_on TEXT NOT NULL,\n  outcome TEXT NOT NULL CHECK (outcome IN ('Open','Charged','Dismissed','Closed - no charges')),\n  modified_by TEXT NOT NULL,\n  modified_on TEXT NOT NULL\n);\nINSERT INTO case_records VALUES\n('1988-0215','Stolen boat, Pier 4','1988-02-15','Charged','MIGRATION','1999-11-20'),\n('1991-0730','Burglary, Elm Street pharmacy','1991-07-30','Charged','MIGRATION','1999-11-20'),\n('1993-0112','Missing person, J. Arden','1993-01-12','Open','MIGRATION','1999-11-20'),\n('1994-0331','Warehouse fire, Dock 7','1994-03-31','Closed - no charges','MKESSLER','1999-12-31'),\n('1995-1009','Assault, Harbor Tavern','1995-10-09','Dismissed','MIGRATION','1999-11-21'),\n('1996-0520','Car theft ring, east side','1996-05-20','Charged','MIGRATION','1999-11-21'),\n('1997-0418','Invoice fraud, Port Authority','1997-04-18','Closed - no charges','MKESSLER','1999-12-31'),\n('1998-0611','Vandalism, City Hall','1998-06-11','Dismissed','MIGRATION','1999-11-22'),\n('1998-1102','Bribery complaint, city contracts','1998-11-02','Closed - no charges','MKESSLER','1999-12-31'),\n('1999-0907','Theft of server equipment','1999-09-07','Closed - no charges','MKESSLER','1999-12-31'),\n('1999-1015','Fraud, Seaside Credit Union','1999-10-15','Charged','MIGRATION','1999-11-22'),\n('2000-0001','Y2K compliance test record','2000-01-01','Closed - no charges','MKESSLER','2000-01-01'),\n('2000-0314','Hit and run, Route 9','2000-03-14','Open','WBRIGGS','2000-03-15'),\n('2001-0622','Pickpocketing, ferry terminal','2001-06-22','Charged','DPIKE','2001-06-25');\n";
+const CASES = [{"id": 1, "title": "The Logged-In Machine", "disk": "BASICS.DSK", "tool": "The Magnifying Glass", "keywords": ["SELECT", "FROM", "ORDER BY", "LIMIT", "DISTINCT"], "tables": ["staff"], "email": {"from": "Chief Ruth Mallory", "subject": "Case 1: Welcome to the basement", "date": "Mon 12/11/2001 08:41", "body": "<p>Welcome aboard. You're replacing Elena Voss, our last temp. She stopped showing up on Friday and isn't answering her phone. HR says it happens with temps. I'm not so sure.</p><p>Your job is the records cleanup after the Y2K migration. Before you start, get to know the building. Open <b>Query Analyzer</b> and look at the <b>staff</b> table. That's everyone who works here.</p><p>One odd thing. The HR memo attached below says the <b>Y2K Task Force</b> was shut down in January 2000, its badges and phone line switched off. Check the staff table and tell me if anyone is still listed there.</p><p>Insert the BASICS.DSK floppy first. The little disk fellow will show you around.</p><p>Ruth Mallory<br>Chief of Police, Harrow Bay PD</p>", "attachments": ["hr_memo"]}, "intro": "Hi! I'm Disko. This disk teaches SELECT, the magnifying glass of SQL. You'll use it to read any table in the building.", "lessons": [{"title": "A table is a grid", "body": "<p>A database keeps information in <b>tables</b>. A table looks like a spreadsheet: every <b>row</b> is one thing (here, one employee), and every <b>column</b> is one fact about it (name, department, hire date).</p><p>To read a table, you write a <b>query</b>. The star <code>*</code> means \"every column\".</p>", "example": "SELECT * FROM staff;"}, {"title": "Pick only the columns you need", "body": "<p>Instead of <code>*</code>, list the columns you want, separated by commas. The order you write them is the order they appear.</p><p>SQL doesn't care about upper or lower case for keywords, but writing <code>SELECT</code> in capitals makes queries easier to read.</p>", "example": "SELECT first_name, last_name, department\nFROM staff;"}, {"title": "Sort with ORDER BY", "body": "<p><code>ORDER BY</code> sorts the rows. It sorts from smallest to largest (A to Z, oldest to newest) unless you add <code>DESC</code> for descending.</p><p>Dates here are written <code>YYYY-MM-DD</code>, so they sort correctly as text.</p>", "example": "SELECT last_name, hire_date\nFROM staff\nORDER BY hire_date DESC;"}, {"title": "Only the top few: LIMIT", "body": "<p><code>LIMIT</code> keeps just the first rows of the result. It always comes last. Combined with <code>ORDER BY</code> it answers questions like \"who are the three newest employees?\"</p>", "example": "SELECT last_name, hire_date\nFROM staff\nORDER BY hire_date\nLIMIT 3;"}, {"title": "No repeats: DISTINCT", "body": "<p><code>DISTINCT</code> removes duplicate rows. Ask for the department of every employee and you'll see \"Patrol\" four times. Add <code>DISTINCT</code> and each department shows once.</p>", "example": "SELECT DISTINCT department\nFROM staff;"}], "practice": [{"id": "1p1", "text": "Show every column and every row of the <b>staff</b> table.", "solution": "SELECT * FROM staff;", "hints": ["Use the star to mean \"all columns\".", "SELECT * FROM ...", "SELECT * FROM staff;"]}, {"id": "1p2", "text": "Show only <b>first_name</b>, <b>last_name</b> and <b>job_title</b> for everyone.", "solution": "SELECT first_name, last_name, job_title FROM staff;", "hints": ["List the three column names after SELECT.", "Separate the columns with commas.", "SELECT first_name, last_name, job_title FROM staff;"]}, {"id": "1p3", "text": "Show <b>last_name</b> and <b>hire_date</b>, sorted from the oldest hire to the newest.", "solution": "SELECT last_name, hire_date FROM staff ORDER BY hire_date;", "ordered": true, "hints": ["You need ORDER BY.", "Oldest first is the normal (ascending) order, so you don't need DESC.", "SELECT last_name, hire_date FROM staff ORDER BY hire_date;"]}, {"id": "1p4", "text": "Elena was one of the newest people here. Show <b>last_name</b> and <b>hire_date</b> of the <b>3 most recently hired</b> people.", "solution": "SELECT last_name, hire_date FROM staff ORDER BY hire_date DESC LIMIT 3;", "hints": ["Sort newest first, then keep only a few rows.", "ORDER BY hire_date DESC, then LIMIT.", "SELECT last_name, hire_date FROM staff ORDER BY hire_date DESC LIMIT 3;"]}, {"id": "1p5", "text": "Show each <b>job_title</b> only once.", "solution": "SELECT DISTINCT job_title FROM staff;", "hints": ["There's a keyword that removes repeats.", "Put DISTINCT right after SELECT.", "SELECT DISTINCT job_title FROM staff;"]}], "investigate": [{"id": "1i1", "text": "List every department once, in alphabetical order. Is the Y2K Task Force still there?", "solution": "SELECT DISTINCT department FROM staff ORDER BY department;", "ordered": true, "hints": ["You need two tools from this disk: one removes repeats, one sorts.", "SELECT DISTINCT department FROM staff ORDER BY ...", "SELECT DISTINCT department FROM staff ORDER BY department;"], "found": "The Y2K Task Force is still in the staff table, nearly two years after the HR memo closed it."}, {"id": "1i2", "text": "Show <b>first_name</b>, <b>last_name</b>, <b>department</b> and <b>badge_id</b> for everyone, sorted by department, so people in the same department sit together. Compare with the HR memo.", "solution": "SELECT first_name, last_name, department, badge_id FROM staff ORDER BY department;", "hints": ["Pick four columns, then sort.", "ORDER BY department", "SELECT first_name, last_name, department, badge_id FROM staff ORDER BY department;"], "found": "Markus Kessler is still in the Y2K Task Force, with badge B-0471. The memo says that badge was switched off in January 2000. A switchboard printout just landed in My Documents."}, {"id": "1i3", "text": "Open <b>PBX_Call_Report.pdf</b> in My Documents. Someone rang Elena's desk at 22:51 on Friday from <b>extension 999</b>, a line that was meant to be dead. Sort staff by <b>phone_ext</b> from highest to lowest and show the top person: first_name, last_name and phone_ext.", "solution": "SELECT first_name, last_name, phone_ext FROM staff ORDER BY phone_ext DESC LIMIT 1;", "hints": ["Highest first means descending order, then keep one row.", "ORDER BY phone_ext DESC LIMIT 1", "SELECT first_name, last_name, phone_ext FROM staff ORDER BY phone_ext DESC LIMIT 1;"], "found": "Extension 999, the old Y2K hotline, still belongs to Markus Kessler. His line called Elena's desk twice on the night she vanished."}], "final": {"question": "Who is still listed in the closed Y2K Task Force? Type their last name.", "answers": ["kessler", "markus kessler", "m. kessler", "m kessler"], "clue": "Markus Kessler is still active: badge B-0471 and the 'dead' Y2K hotline, ext. 999, which rang Elena's desk at 22:51 the night she vanished.", "messenger": ["hey. you found kessler.", "he rang her desk twice that night. nobody answered.", "check where his badge went after that."]}}, {"id": 2, "title": "The Badge Reader", "disk": "FILTER.DSK", "tool": "The Fingerprint Filter", "keywords": ["WHERE", "AND / OR", "IN", "BETWEEN", "LIKE", "IS NULL"], "tables": ["staff", "badge_log"], "email": {"from": "Chief Ruth Mallory", "subject": "Case 2: Friday night", "date": "Mon 12/11/2001 11:15", "body": "<p>Kessler? He was on the migration team. I thought he left with the contractor.</p><p>I've unlocked the <b>badge_log</b> table for you. Every time someone swipes a badge, the reader records the badge number, the room, and when they came in and went out. If they haven't swiped out yet, the exit time is empty.</p><p>Elena worked late on Friday 9 November. I want to know who was in the <b>Server Room</b> that night after 22:00, and whether anyone went in and never came out.</p><p>I've attached the basement security plan so you know where the door readers and cameras are.</p><p>You'll need FILTER.DSK. Reading the whole log row by row will take you all week.</p><p>Ruth</p>", "attachments": ["floor_plan"]}, "intro": "FILTER.DSK! This one is my favourite. WHERE lets you keep only the rows you care about, like dusting for fingerprints.", "lessons": [{"title": "Keep only matching rows: WHERE", "body": "<p><code>WHERE</code> comes after <code>FROM</code> and keeps only rows where the condition is true. Text goes in <b>single quotes</b>. Numbers don't need quotes.</p><p>Comparison signs: <code>=</code> <code>&lt;&gt;</code> (not equal) <code>&gt;</code> <code>&lt;</code> <code>&gt;=</code> <code>&lt;=</code>.</p>", "example": "SELECT first_name, last_name\nFROM staff\nWHERE department = 'IT';"}, {"title": "Combine conditions: AND, OR", "body": "<p><code>AND</code> means both conditions must be true. <code>OR</code> means at least one. When you mix them, add brackets so SQL reads them the way you mean.</p><p>Times in badge_log look like <code>'2001-11-09 22:44'</code>, so you can compare them like text.</p>", "example": "SELECT *\nFROM badge_log\nWHERE room = 'Records Room'\n  AND entry_time > '2001-11-09 18:00';"}, {"title": "A list of options: IN", "body": "<p><code>IN</code> is a shortcut for many ORs. <code>department IN ('IT', 'Finance')</code> means the same as <code>department = 'IT' OR department = 'Finance'</code>.</p>", "example": "SELECT first_name, last_name, department\nFROM staff\nWHERE department IN ('IT', 'Finance');"}, {"title": "A range: BETWEEN", "body": "<p><code>BETWEEN a AND b</code> keeps values from a to b, <b>including</b> both ends. It works for numbers, dates and times.</p>", "example": "SELECT last_name, hire_date\nFROM staff\nWHERE hire_date BETWEEN '1990-01-01' AND '1995-12-31';"}, {"title": "Partial matches: LIKE", "body": "<p><code>LIKE</code> searches text with wildcards. <code>%</code> means \"any number of characters\" and <code>_</code> means \"exactly one character\".</p><p><code>'D%'</code> finds text starting with D. <code>'%son'</code> finds text ending in son.</p>", "example": "SELECT first_name, last_name\nFROM staff\nWHERE first_name LIKE 'D%';"}, {"title": "Missing values: IS NULL", "body": "<p><b>NULL</b> means \"no value\": not zero, not empty text, just unknown. Because it's unknown, <code>exit_time = NULL</code> never matches anything. Always write <code>IS NULL</code> or <code>IS NOT NULL</code>.</p>", "example": "SELECT *\nFROM badge_log\nWHERE exit_time IS NOT NULL\nLIMIT 5;"}], "practice": [{"id": "2p1", "text": "Show all columns of every swipe into the <b>Server Room</b>.", "solution": "SELECT * FROM badge_log WHERE room = 'Server Room';", "hints": ["Filter the badge_log table on the room column.", "WHERE room = '...'  (mind the capital letters)", "SELECT * FROM badge_log WHERE room = 'Server Room';"]}, {"id": "2p2", "text": "Show all columns of every swipe whose <b>entry_time</b> is on <b>9 November 2001</b>.", "solution": "SELECT * FROM badge_log WHERE entry_time BETWEEN '2001-11-09 00:00' AND '2001-11-09 23:59';", "hints": ["You want a range of times within one day.", "BETWEEN '2001-11-09 00:00' AND '2001-11-09 23:59' (LIKE '2001-11-09%' works too)", "SELECT * FROM badge_log WHERE entry_time BETWEEN '2001-11-09 00:00' AND '2001-11-09 23:59';"]}, {"id": "2p3", "text": "Show <b>first_name</b> and <b>last_name</b> of staff whose last name starts with <b>K</b>.", "solution": "SELECT first_name, last_name FROM staff WHERE last_name LIKE 'K%';", "hints": ["This is a partial match.", "LIKE with the % wildcard", "SELECT first_name, last_name FROM staff WHERE last_name LIKE 'K%';"]}, {"id": "2p4", "text": "Show <b>first_name</b>, <b>last_name</b> and <b>department</b> of everyone in <b>Patrol</b> or <b>Dispatch</b>.", "solution": "SELECT first_name, last_name, department FROM staff WHERE department IN ('Patrol', 'Dispatch');", "hints": ["Two possible values: use OR or a list.", "department IN ('Patrol', 'Dispatch')", "SELECT first_name, last_name, department FROM staff WHERE department IN ('Patrol', 'Dispatch');"]}, {"id": "2p5", "text": "Show all columns of every swipe that has <b>no exit time</b>.", "solution": "SELECT * FROM badge_log WHERE exit_time IS NULL;", "hints": ["A missing value is NULL.", "= NULL never works. Use IS NULL.", "SELECT * FROM badge_log WHERE exit_time IS NULL;"]}], "investigate": [{"id": "2i1", "text": "Show all columns of every <b>Server Room</b> swipe on the night of <b>9 November</b> that started after <b>22:00</b>. Careful: \"after 22:00 on the 9th\" should not include the following days.", "solution": "SELECT * FROM badge_log WHERE room = 'Server Room' AND entry_time BETWEEN '2001-11-09 22:00' AND '2001-11-09 23:59';", "hints": ["You need two conditions joined with AND.", "Bound the time on both sides: BETWEEN '2001-11-09 22:00' AND '2001-11-09 23:59'", "SELECT * FROM badge_log WHERE room = 'Server Room' AND entry_time BETWEEN '2001-11-09 22:00' AND '2001-11-09 23:59';"], "found": "Two badges went into the Server Room late that night: B-1107 and B-0471. One of them never swiped out."}, {"id": "2i2", "text": "Whose badges are <b>B-1107</b> and <b>B-0471</b>? Show first_name, last_name and badge_id.", "solution": "SELECT first_name, last_name, badge_id FROM staff WHERE badge_id IN ('B-1107', 'B-0471');", "hints": ["Badge numbers live in the staff table.", "WHERE badge_id IN (...)", "SELECT first_name, last_name, badge_id FROM staff WHERE badge_id IN ('B-1107', 'B-0471');"], "found": "Dana Pike, the records clerk, left at 23:02. Markus Kessler went in at 23:47 and the log never saw him leave."}, {"id": "2i3", "text": "Elena's badge is <b>B-2290</b>. Show her swipe with the latest exit time. (Use a tool from BASICS.DSK.)", "solution": "SELECT * FROM badge_log WHERE badge_id = 'B-2290' ORDER BY exit_time DESC LIMIT 1;", "hints": ["Filter on her badge, then sort.", "ORDER BY exit_time DESC LIMIT 1", "SELECT * FROM badge_log WHERE badge_id = 'B-2290' ORDER BY exit_time DESC LIMIT 1;"], "found": "Elena left the Records Room at 21:15. So when ext. 999 rang her desk at 22:51, the room was empty. Kessler reached the Server Room an hour later."}], "final": {"question": "At what time did Kessler's badge enter the Server Room and never come out? Type it like 12:34.", "answers": ["23:47", "2001-11-09 23:47", "11:47 pm", "11:47pm", "23.47"], "clue": "Kessler's badge entered the Server Room at 23:47 on Friday 9 November and never swiped out, an hour after his line rang Elena's empty desk. Dana Pike was there earlier but left at 23:02.", "messenger": ["23:47. cam 04 faces that door.", "dana pike is ok. she was pulling paper files for elena.", "the paper files are the proof. the database lies."]}}, {"id": 3, "title": "The Paper Files", "disk": "BUILDER.DSK", "tool": "The Case File Kit", "keywords": ["CREATE TABLE", "INSERT", "UPDATE", "DELETE", "constraints"], "tables": ["staff", "badge_log", "case_records"], "email": {"from": "Chief Ruth Mallory", "subject": "Case 3: A box from Dana", "date": "Mon 12/11/2001 15:02", "body": "<p>Dana Pike came to see me. Elena asked her on Friday to pull four old paper case files from the archive. Dana left them on Elena's desk. They're on yours now.</p><p>The box says:</p><table class=\"paper\"><tr><th>Case no.</th><th>Title</th><th>Paper file says</th></tr><tr><td>1994-0331</td><td>Warehouse fire, Dock 7</td><td>Charged</td></tr><tr><td>1997-0418</td><td>Invoice fraud, Port Authority</td><td>Charged</td></tr><tr><td>1998-1102</td><td>Bribery complaint, city contracts</td><td>Open</td></tr><tr><td>1999-0907</td><td>Theft of server equipment</td><td>Charged</td></tr></table><p>I've scanned the cover of 1997-0418 and attached it. Look at the stamp.</p><p>I've unlocked <b>case_records</b>. Compare these four with the database. If the database is wrong, fix it. You have my authorisation.</p><p>And start a proper suspects list. In a table, not on a sticky note.</p><p>Ruth</p>", "attachments": ["case_1997"]}, "intro": "BUILDER.DSK lets you change the database, not just read it. Big power, big responsibility. If you break something, the Reset DB button puts everything back.", "lessons": [{"title": "Build a table: CREATE TABLE", "body": "<p><code>CREATE TABLE</code> makes a new, empty table. You give every column a name and a <b>type</b>: <code>INTEGER</code> for whole numbers, <code>TEXT</code> for words, and so on.</p><p><code>PRIMARY KEY</code> marks the column that identifies each row. No two rows can share it.</p><p>(In PostgreSQL you'd often write <code>VARCHAR(100)</code>, <code>DATE</code> or <code>SERIAL</code>. The idea is the same.)</p>", "example": "CREATE TABLE witnesses (\n  witness_id INTEGER PRIMARY KEY,\n  name TEXT NOT NULL,\n  phone TEXT\n);"}, {"title": "Add rows: INSERT", "body": "<p><code>INSERT INTO</code> adds a row. List the columns, then the values in the same order. If you leave out an <code>INTEGER PRIMARY KEY</code>, the database picks the next number for you.</p>", "example": "INSERT INTO witnesses (name, phone)\nVALUES ('Dock worker, night shift', '555-0192');"}, {"title": "Rules the data must follow: constraints", "body": "<p><b>Constraints</b> stop bad data getting in. <code>NOT NULL</code> means the column must have a value. <code>UNIQUE</code> means no repeats. <code>CHECK</code> tests a rule, like \"outcome must be one of these four words\".</p><p>If you break a rule, the database refuses the whole statement. That's a feature, not a bug.</p>", "example": "INSERT INTO witnesses (phone)\nVALUES ('555-0000');\n-- This fails: name is NOT NULL"}, {"title": "Change rows: UPDATE", "body": "<p><code>UPDATE</code> changes values in rows that match a <code>WHERE</code>. <b>Always write the WHERE first.</b> An UPDATE without WHERE changes every row in the table.</p><p>Tip: run a SELECT with the same WHERE first, to see which rows you're about to change.</p>", "example": "UPDATE witnesses\nSET phone = '555-0193'\nWHERE name = 'Dock worker, night shift';"}, {"title": "Remove rows: DELETE", "body": "<p><code>DELETE FROM</code> removes rows that match the <code>WHERE</code>. Same rule: without WHERE it empties the whole table.</p><p><code>DROP TABLE</code> deletes the table itself, structure and all.</p>", "example": "DELETE FROM witnesses\nWHERE witness_id = 1;"}], "practice": [{"id": "3p1", "type": "check", "text": "Create a table called <b>suspects</b> with three columns: <b>suspect_id</b> (INTEGER PRIMARY KEY), <b>name</b> (TEXT, NOT NULL) and <b>reason</b> (TEXT).", "solution": "CREATE TABLE suspects (suspect_id INTEGER PRIMARY KEY, name TEXT NOT NULL, reason TEXT);", "check": "SELECT (SELECT count(*) FROM pragma_table_info('suspects') WHERE name IN ('suspect_id','name','reason')) = 3", "hints": ["CREATE TABLE suspects ( ... );", "Each column is name, then type, separated by commas.", "CREATE TABLE suspects (suspect_id INTEGER PRIMARY KEY, name TEXT NOT NULL, reason TEXT);"]}, {"id": "3p2", "type": "check", "text": "Add <b>Markus Kessler</b> to suspects, with a reason such as 'Badge entered server room 23:47, never left'.", "solution": "INSERT INTO suspects (name, reason) VALUES ('Markus Kessler', 'Badge entered server room 23:47, never left');", "check": "SELECT EXISTS (SELECT 1 FROM suspects WHERE name LIKE '%Kessler%')", "hints": ["INSERT INTO suspects (name, reason) VALUES (...);", "Text values go in single quotes.", "INSERT INTO suspects (name, reason) VALUES ('Markus Kessler', 'Badge entered server room 23:47, never left');"]}, {"id": "3p3", "type": "check", "text": "Add <b>Dana Pike</b> to suspects too, with the reason 'In server room Friday night'.", "solution": "INSERT INTO suspects (name, reason) VALUES ('Dana Pike', 'In server room Friday night');", "check": "SELECT EXISTS (SELECT 1 FROM suspects WHERE name LIKE '%Pike%')", "hints": ["Same as the last task, different values.", "INSERT INTO suspects (name, reason) VALUES ('Dana Pike', ...);", "INSERT INTO suspects (name, reason) VALUES ('Dana Pike', 'In server room Friday night');"]}, {"id": "3p4", "type": "check", "text": "The Chief vouches for Dana. <b>Update</b> her reason to 'Cleared - pulled files for Elena'.", "solution": "UPDATE suspects SET reason = 'Cleared - pulled files for Elena' WHERE name = 'Dana Pike';", "check": "SELECT EXISTS (SELECT 1 FROM suspects WHERE name LIKE '%Pike%' AND reason LIKE 'Cleared%') AND NOT EXISTS (SELECT 1 FROM suspects WHERE name LIKE '%Kessler%' AND reason LIKE 'Cleared%')", "hints": ["UPDATE suspects SET reason = ... WHERE ...;", "Don't forget the WHERE, or Kessler gets cleared too!", "UPDATE suspects SET reason = 'Cleared - pulled files for Elena' WHERE name = 'Dana Pike';"]}, {"id": "3p5", "type": "check", "text": "Cleared people don't belong on a suspects list. <b>Delete</b> Dana's row, and keep Kessler's.", "solution": "DELETE FROM suspects WHERE name = 'Dana Pike';", "check": "SELECT NOT EXISTS (SELECT 1 FROM suspects WHERE name LIKE '%Pike%') AND EXISTS (SELECT 1 FROM suspects WHERE name LIKE '%Kessler%')", "hints": ["DELETE FROM suspects WHERE ...;", "Match her name exactly as you inserted it.", "DELETE FROM suspects WHERE name = 'Dana Pike';"]}], "investigate": [{"id": "3i1", "text": "Show all columns from <b>case_records</b> for the four case numbers in Dana's box: 1994-0331, 1997-0418, 1998-1102 and 1999-0907.", "solution": "SELECT * FROM case_records WHERE case_no IN ('1994-0331', '1997-0418', '1998-1102', '1999-0907');", "hints": ["A list of four values: you learned this on FILTER.DSK.", "WHERE case_no IN ('1994-0331', ...)", "SELECT * FROM case_records WHERE case_no IN ('1994-0331', '1997-0418', '1998-1102', '1999-0907');"], "found": "All four say 'Closed - no charges' in the database. The paper files disagree. And look at who modified them, and when."}, {"id": "3i2", "type": "check", "text": "Fix the four records so <b>outcome</b> matches the paper files: three are 'Charged', 1998-1102 is 'Open'. The spelling must be exact: the table has a CHECK rule.", "solution": "UPDATE case_records SET outcome = 'Charged' WHERE case_no IN ('1994-0331', '1997-0418', '1999-0907');\nUPDATE case_records SET outcome = 'Open' WHERE case_no = '1998-1102';", "check": "SELECT (SELECT count(*) FROM case_records WHERE (case_no IN ('1994-0331','1997-0418','1999-0907') AND outcome = 'Charged') OR (case_no = '1998-1102' AND outcome = 'Open')) = 4 AND (SELECT count(*) FROM case_records WHERE outcome = 'Charged') = 8", "hints": ["You need two UPDATE statements: one for 'Charged', one for 'Open'.", "UPDATE case_records SET outcome = 'Charged' WHERE case_no IN (...);", "UPDATE case_records SET outcome = 'Charged' WHERE case_no IN ('1994-0331', '1997-0418', '1999-0907');\nUPDATE case_records SET outcome = 'Open' WHERE case_no = '1998-1102';"], "found": "The truth is back in the database. A warehouse fire, an invoice fraud, a bribery complaint and stolen servers, all buried by one login."}, {"id": "3i3", "type": "check", "text": "MKESSLER also slipped in a fake record. Find the one he <b>created in 2000</b> (look at opened_on), then <b>delete</b> it. Only that one.", "solution": "DELETE FROM case_records WHERE case_no = '2000-0001';", "check": "SELECT NOT EXISTS (SELECT 1 FROM case_records WHERE case_no = '2000-0001') AND (SELECT count(*) FROM case_records) = 13", "hints": ["First find it: SELECT * FROM case_records WHERE modified_by = 'MKESSLER';", "Then DELETE FROM case_records WHERE case_no = '...';", "DELETE FROM case_records WHERE case_no = '2000-0001';"], "found": "A \"Y2K compliance test\" record. It existed only to make the edits look like routine testing."}], "final": {"question": "On what date did MKESSLER change the four case records? Type it as YYYY-MM-DD.", "answers": ["1999-12-31", "31.12.1999", "31/12/1999", "12/31/1999", "31-12-1999", "dec 31 1999", "december 31 1999", "31 december 1999", "new year's eve"], "clue": "On 31 December 1999, while everyone watched for the Y2K bug, MKESSLER changed four case outcomes to 'Closed - no charges' and planted a fake test record.", "messenger": ["new year's eve 1999. nobody checks logs at midnight.", "read the rollover report. look who signed it off.", "follow the money. the migration invoices. i'll be in touch."]}}];
 </script>
 <script>
 (function () {
@@ -770,6 +911,18 @@ const CASES = [{"id": 1, "title": "The Logged-In Machine", "disk": "BASICS.DSK",
     speaker: '<svg viewBox="0 0 16 16"><path d="M2 6h3l4-3v10l-4-3H2z" fill="#d8d4c4" stroke="#111"/><path d="M11 5c1.5 1.5 1.5 4.5 0 6M13 3.5c2.5 2.5 2.5 6.5 0 9" fill="none" stroke="#111"/></svg>',
     mute: '<svg viewBox="0 0 16 16"><path d="M2 6h3l4-3v10l-4-3H2z" fill="#d8d4c4" stroke="#111"/><path d="M11 6l4 4M15 6l-4 4" stroke="#a3191b" stroke-width="1.5"/></svg>',
     shut: '<svg viewBox="0 0 32 32"><rect x="5" y="5" width="22" height="22" fill="#c3c3be" stroke="#111"/><circle cx="16" cy="17" r="6" fill="none" stroke="#a3191b" stroke-width="2.5"/><path d="M16 9v8" stroke="#a3191b" stroke-width="2.5"/></svg>',
+    pdf: '<svg viewBox="0 0 32 32"><path d="M7 3h13l6 6v20H7z" fill="#fff" stroke="#111"/><path d="M20 3v6h6" fill="#ddd" stroke="#111"/><rect x="4" y="16" width="18" height="8" fill="#b3201f" stroke="#111"/><text x="13" y="22.5" text-anchor="middle" font-family="Tahoma,sans-serif" font-size="6.5" font-weight="700" fill="#fff">PDF</text></svg>',
+    jpg: '<svg viewBox="0 0 32 32"><rect x="3" y="6" width="26" height="20" fill="#222" stroke="#111"/><rect x="5" y="8" width="22" height="16" fill="#4a5a52"/><path d="M5 24l7-8 5 5 3-3 7 6z" fill="#2e3a33"/><circle cx="22" cy="12" r="2" fill="#c9c9b0"/><circle cx="8" cy="10" r="1.3" fill="#c9302c"/></svg>',
+    docs: '<svg viewBox="0 0 32 32"><path d="M3 8h9l2 3h15v16H3z" fill="#f2cf6a" stroke="#111"/><path d="M9 6h12l3 3v10H9z" fill="#fff" stroke="#111"/><path d="M12 11h9M12 14h9" stroke="#888"/><path d="M3 13h26v14H3z" fill="#f6dc86" stroke="#111"/></svg>',
+    clock: '<svg viewBox="0 0 32 32"><rect x="6" y="3" width="20" height="26" fill="#f3ecd6" stroke="#111"/><path d="M9 8h14M9 12h14M9 16h9" stroke="#8a7a4a"/><circle cx="21" cy="22" r="6" fill="#fff" stroke="#111"/><path d="M21 18.5V22h3" stroke="#a3191b" stroke-width="1.5" fill="none"/></svg>',
+    card: '<svg viewBox="0 0 32 32"><rect x="2" y="7" width="28" height="18" rx="2" fill="#f4f1e6" stroke="#111"/><rect x="2" y="7" width="28" height="5" fill="#23324f"/><rect x="5" y="14" width="7" height="8" fill="#c9d6df" stroke="#23324f"/><path d="M15 16h11M15 19h8M15 22h10" stroke="#555"/><rect x="13" y="3" width="6" height="5" rx="1" fill="none" stroke="#111"/></svg>',
+    reader: '<svg viewBox="0 0 32 32"><rect x="6" y="11" width="20" height="18" fill="#d8d4c4" stroke="#111"/><rect x="9" y="11" width="14" height="2" fill="#111"/><rect x="9" y="16" width="14" height="6" fill="#9fb27c" stroke="#5d6b45"/><circle cx="22" cy="25.5" r="1.6" fill="#7dff6a" stroke="#111" stroke-width=".5"/><rect x="10" y="2" width="12" height="10" rx="1" fill="#f4f1e6" stroke="#111"/><rect x="10" y="2" width="12" height="3" fill="#23324f"/></svg>',
+    clip: '<svg viewBox="0 0 16 16"><path d="M10 4v7a2.5 2.5 0 0 1-5 0V4a1.6 1.6 0 0 1 3.2 0v6.5" fill="none" stroke="#333" stroke-width="1.3"/></svg>',
+    ledger: '<svg viewBox="0 0 32 32"><rect x="5" y="3" width="22" height="26" fill="#23324f" stroke="#111"/><rect x="5" y="3" width="4" height="26" fill="#121b2d" stroke="#111"/><rect x="12" y="8" width="12" height="7" fill="#fbf8ee" stroke="#111"/><path d="M14 10.5h8M14 12.5h6" stroke="#23324f"/><path d="M12 20h12M12 23h12" stroke="#f2b33d" stroke-width="1.5"/><rect x="24" y="24" width="5" height="7" fill="#b3201f"/></svg>',
+    tbl: '<svg viewBox="0 0 16 16"><rect x="1.5" y="2.5" width="13" height="11" fill="#fff" stroke="#23324f"/><rect x="1.5" y="2.5" width="13" height="3" fill="#2f73b8" stroke="#23324f"/><path d="M1.5 8.5h13M1.5 11h13M6 5.5v8" stroke="#8aa0c0"/></svg>',
+    col: '<svg viewBox="0 0 16 16"><rect x="5" y="2.5" width="6" height="11" fill="#fff" stroke="#23324f"/><rect x="5" y="2.5" width="6" height="3" fill="#f2b33d" stroke="#23324f"/></svg>',
+    lock: '<svg viewBox="0 0 16 16"><rect x="3" y="7" width="10" height="7" fill="#f2b33d" stroke="#111"/><path d="M5 7V5a3 3 0 0 1 6 0v2" fill="none" stroke="#111" stroke-width="1.5"/></svg>',
+    db: '<svg viewBox="0 0 16 16"><ellipse cx="8" cy="4" rx="5.5" ry="2" fill="#f2b33d" stroke="#111"/><path d="M2.5 4v8c0 1.1 2.5 2 5.5 2s5.5-.9 5.5-2V4" fill="#e0a12e" stroke="#111"/></svg>',
     board: '<svg viewBox="0 0 32 32"><rect x="2" y="5" width="28" height="22" fill="#b48a5a" stroke="#111"/><rect x="2" y="5" width="28" height="22" fill="none" stroke="#6b4a2a" stroke-width="2"/><rect x="5" y="8" width="8" height="9" fill="#f8f6ef" transform="rotate(-6 9 12)"/><rect x="18" y="9" width="9" height="7" fill="#fdfdf7"/><rect x="11" y="18" width="10" height="6" fill="#fff48a" transform="rotate(4 16 21)"/><path d="M9 9L22 10L16 19" fill="none" stroke="#b3201f" stroke-width="1.2"/><circle cx="9" cy="9" r="1.6" fill="#b3201f"/><circle cx="22" cy="10" r="1.6" fill="#b3201f"/><circle cx="16" cy="19" r="1.6" fill="#b3201f"/></svg>',
     crt: '<svg viewBox="0 0 32 32"><rect x="3" y="4" width="26" height="20" rx="3" fill="#d8d4c4" stroke="#111"/><rect x="6" y="7" width="20" height="14" rx="2" fill="#123"/><path d="M7 10h18M7 13h18M7 16h18M7 19h18" stroke="#2c5b6e"/><rect x="12" y="24" width="8" height="4" fill="#a8a493" stroke="#111"/></svg>',
     reset: '<svg viewBox="0 0 32 32"><path d="M24 10a10 10 0 1 0 2 9" fill="none" stroke="#2f73b8" stroke-width="3"/><path d="M19 4l7 6-8 3z" fill="#2f73b8"/></svg>'
@@ -782,7 +935,7 @@ const CASES = [{"id": 1, "title": "The Logged-In Machine", "disk": "BASICS.DSK",
 
   /* ---------- storage ---------- */
   const KEY = 'harrow-bay-v1';
-  const blank = () => ({ unlocked: 1, cur: 1, tab: 'lesson', progress: {}, solved: {}, notes: [], read: {}, chat: [], disko: true, sound: true, gateSkip: {}, insertedDisk: {}, wrong: 0, sql: '', active: {}, chatUnread: 0 });
+  const blank = () => ({ unlocked: 1, cur: 1, tab: 'lesson', progress: {}, solved: {}, notes: [], read: {}, chat: [], disko: true, sound: true, gateSkip: {}, insertedDisk: {}, wrong: 0, sql: '', active: {}, chatUnread: 0, docsSeen: {}, name: 'New Temp' });
   let S = blank();
   function loadState() {
     try { const raw = localStorage.getItem(KEY); if (raw) S = Object.assign(blank(), JSON.parse(raw)); } catch (e) {}
@@ -826,7 +979,7 @@ const CASES = [{"id": 1, "title": "The Logged-In Machine", "disk": "BASICS.DSK",
 
   /* ---------- window manager ---------- */
   let z = 10;
-  const WIN_IDS = ['w-qa', 'w-mail', 'w-board', 'w-notes', 'w-readme', 'w-pc', 'w-bin', 'w-text', 'w-chat'];
+  const WIN_IDS = ['w-qa', 'w-mail', 'w-reader', 'w-docs', 'w-ledger', 'w-board', 'w-notes', 'w-readme', 'w-pc', 'w-bin', 'w-text', 'w-chat'];
   function decorate(win) {
     const tb = document.createElement('div'); tb.className = 'titlebar';
     tb.innerHTML = `${ICON[win.dataset.icon] || ''}<span class="t">${esc(win.dataset.title)}</span><button class="btn tb-btn" data-act="min" aria-label="Minimise">_</button><button class="btn tb-btn" data-act="close" aria-label="Close">×</button>`;
@@ -996,9 +1149,11 @@ const CASES = [{"id": 1, "title": "The Logged-In Machine", "disk": "BASICS.DSK",
     host.innerHTML = '<span class="lbl">Tables:</span>' + ts.map(t => `<button class="btn chip" data-tbl="${esc(t)}">${esc(t)}</button>`).join('');
     const locked = Object.keys(STORY_TABLES).filter(t => STORY_TABLES[t] > S.unlocked);
     if (locked.length) host.insertAdjacentHTML('beforeend', `<span class="lbl" style="color:#666">· ${locked.length} locked</span>`);
+    host.insertAdjacentHTML('beforeend', `<button class="btn chip" data-ledger style="margin-left:auto">${ICON.ledger.replace('<svg', '<svg width="14" height="14"')}Ledger</button>`);
   }
   let openCol = null;
   $('#tablestrip').addEventListener('click', e => {
+    if (e.target.closest('[data-ledger]')) { ledgerSel = { t: openCol || 'staff', c: null }; if (openCol) ledgerOpen[openCol] = true; openWin('w-ledger'); return; }
     const b = e.target.closest('[data-tbl]'); if (!b) return; const t = b.dataset.tbl; const info = $('#colinfo');
     if (openCol === t) { info.hidden = true; openCol = null; return; }
     const r = db.exec(`SELECT name, type, "notnull", pk FROM pragma_table_info('${t.replace(/'/g, "''")}')`);
@@ -1034,7 +1189,7 @@ const CASES = [{"id": 1, "title": "The Logged-In Machine", "disk": "BASICS.DSK",
     } catch (e) { err = e.message; }
     const ms = Math.max(1, Math.round(performance.now() - t0));
     renderResult(res, changed, err, ms);
-    if (mutating) { saveDb(); renderTableStrip(); if (openCol) { const o = openCol; openCol = null; const b = $(`[data-tbl="${o}"]`); if (b) b.click(); } }
+    if (mutating) { saveDb(); renderTableStrip(); if (!$('#w-ledger').hidden) { if (ledgerSel.t && !allTables().includes(ledgerSel.t)) ledgerSel = { t: null, c: null }; renderLedger(); } if (openCol) { const o = openCol; openCol = null; const b = $(`[data-tbl="${o}"]`); if (b) b.click(); } }
     if (err) { SFX.err(); say(explain(err), 'worried'); return; }
     const clean = sql.replace(/'[^']*'/g, "''");
     if (/^\s*(update|delete)\b/im.test(clean) && !/\bwhere\b/i.test(clean)) say('Whoa, no <b>WHERE</b>! That changed <b>every</b> row in the table. If that wasn\'t the plan, press <b>Reset DB</b>.', 'worried');
@@ -1067,6 +1222,7 @@ const CASES = [{"id": 1, "title": "The Logged-In Machine", "disk": "BASICS.DSK",
     if (ok) {
       prog(c.id)[t.id] = true; hintLevel[t.id] = 0;
       if (t.found) addNote(c.id, t.found);
+      checkNewDocs();
       SFX.ok();
       const list = S.tab === 'practice' ? c.practice : c.investigate;
       const nx = list.find(x => !prog(c.id)[x.id]);
@@ -1105,9 +1261,10 @@ const CASES = [{"id": 1, "title": "The Logged-In Machine", "disk": "BASICS.DSK",
   async function solveCase(c) {
     S.solved[c.id] = true; addNote(c.id, 'CASE CLOSED: ' + c.final.clue, true);
     if (S.unlocked < c.id + 1 && caseOf(c.id + 1)) S.unlocked = c.id + 1;
-    save(); SFX.tada(); renderCaseSel(); renderTab(); renderTableStrip(); renderIcons(); stampCase(c); tick(); renderSticky(); if (!$('#w-board').hidden) renderBoard();
+    if (!$('#w-ledger').hidden) renderLedger();
+    save(); setTimeout(() => checkNewDocs(), reduced ? 0 : 3200); SFX.tada(); renderCaseSel(); renderTab(); renderTableStrip(); renderIcons(); stampCase(c); tick(); renderSticky(); if (!$('#w-board').hidden) renderBoard();
     const next = caseOf(c.id + 1);
-    say(`<b>Case ${c.id} closed!</b> The clue is in <b>Case Notes</b>.` + (next ? ` A new email just arrived, and <b>${esc(next.disk)}</b> is in the floppy drive.` : ' That\'s all the disks in version 1. Check your Inbox.'), 'happy');
+    say(`<b>Case ${c.id} closed!</b> The clue is in <b>Case Notes</b>.` + (next ? ` A new email just arrived, and <b>${esc(next.disk)}</b> is in the floppy drive.` : ' That\'s all the disks in version 1. Check your Inbox.') + `<br><br>Your shift code is now <b>${shiftCode()}</b>. Write it down to carry on later from any computer (also in <b>Start → Clock out</b>).`, 'happy');
     await wait(2700);
     balloon('board', 'Evidence Board updated', 'New cards are pinned to the board. Click to look.', 'w-board');
     await wait(1200);
@@ -1130,7 +1287,8 @@ const CASES = [{"id": 1, "title": "The Logged-In Machine", "disk": "BASICS.DSK",
   }
   function renderNotes() {
     const by = {}; S.notes.forEach(n => (by[n.c] = by[n.c] || []).push(n));
-    let html = `<span class="dim">HARROW BAY PD - RECORDS CLEANUP\nanalyst: NEW TEMP (badge B-2301)\nstarted: Mon 12 Nov 2001\n================================</span>\n`;
+    let html = `<span class="dim">HARROW BAY PD - RECORDS CLEANUP\nanalyst: ${esc(badgeName().toUpperCase())} (badge B-2301)
+shift code: ${shiftCode()}\nstarted: Mon 12 Nov 2001\n================================</span>\n`;
     if (!S.notes.length) html += '\nNothing yet.\nClues appear here as you follow leads in Query Analyzer.';
     Object.keys(by).forEach(k => { const c = caseOf(+k); html += `<h4>CASE ${k}: ${esc(c.title.toUpperCase())}</h4>`; by[k].forEach(n => { html += (n.closed ? '>> ' : ' - ') + esc(n.text) + '\n'; }); });
     if (S.notes.length) html += `\n<span class="dim">--------------------------------\nstill unknown: where is Elena?</span>`;
@@ -1142,7 +1300,7 @@ const CASES = [{"id": 1, "title": "The Logged-In Machine", "disk": "BASICS.DSK",
   function mails() {
     const list = [{ id: 'help', from: 'Ines Duarte (Help Desk)', subject: 'Your new computer', date: 'Mon 12/11/2001 08:30', body: `<p>Hi, welcome to Records. Your PC is set up. Quick tour:</p><p><b>Query Analyzer</b> is where you work with the database. Write a query in the black box, then press <b>Run</b> (or F5, or Ctrl+Enter). Results show underneath.</p><p>Each case comes on a <b>floppy disk</b>. Open <b>My Computer</b> to see them. The left side of Query Analyzer has a lesson, practice tasks, and the investigation for the current disk.</p><p>If you break a table, press <b>Reset DB</b>. It puts everything back.</p><p>Oh, and the animated disk is called Disko. He came with the software. I couldn't uninstall him.</p><p>Ines<br>IT Help Desk, ext. 302</p>` }];
     CASES.forEach(c => { if (c.id <= S.unlocked) list.push(Object.assign({ id: 'case' + c.id, caseId: c.id }, c.email)); });
-    if (S.solved[3]) list.push({ id: 'v2', from: 'Chief Ruth Mallory', subject: 'Case 4: The mainframe tapes', date: 'Mon 12/11/2001 17:48', body: `<p>Outstanding work today. Four buried cases, one fake record, and a name. I'm calling Internal Affairs in the morning.</p><p>But Kessler didn't do this alone. Someone signed off on that migration contract. The old mainframe tapes arrive next week, and the dates on them are a mess.</p><p>You'll need <b>DECODER.DSK</b>. It isn't ready yet.</p><p><i>(Case 4 is coming in the next version of the game. Your progress is saved.)</i></p><p>Ruth</p>` });
+    if (S.solved[3]) list.push({ id: 'v2', from: 'Chief Ruth Mallory', subject: 'Case 4: The mainframe tapes', date: 'Mon 12/11/2001 17:48', body: `<p>Outstanding work today. Four buried cases, one fake record, and a name. I'm calling Internal Affairs in the morning.</p><p>Records found the Y2K rollover report in Kessler's old drawer. It's in My Documents. Read who approved it.</p><p>Kessler didn't do this alone. Someone signed off on that migration contract. The old mainframe tapes arrive next week, and the dates on them are a mess.</p><p>You'll need <b>DECODER.DSK</b>. It isn't ready yet.</p><p><i>(Case 4 is coming in the next version of the game. Your progress is saved.)</i></p><p>Ruth</p>` });
     return list.reverse();
   }
   const drafts = [{ id: 'draft', from: 'Elena Voss', subject: '(no subject)', date: 'Fri 09/11/2001 21:09', body: `<p><b>To:</b> Chief Mallory</p><p>Ruth, the migration wasn't an accident. They used Y2K to hide it. Check the tables.</p><p>I can't say more on this system. I think someone reads</p>` }];
@@ -1153,7 +1311,8 @@ const CASES = [{"id": 1, "title": "The Logged-In Machine", "disk": "BASICS.DSK",
     if (!mailSel || !list.some(m => m.id === mailSel)) mailSel = (list.find(m => !S.read[m.id]) || list[0]).id;
     $('#mailList').innerHTML = `<table><thead><tr><th>From</th><th>Subject</th><th>Received</th></tr></thead><tbody>${list.map(m => `<tr data-mail="${m.id}" class="${S.read[m.id] || mailFolder === 'drafts' ? '' : 'unread'}${m.id === mailSel ? ' sel' : ''}"><td>${esc(m.from)}</td><td>${esc(m.subject)}</td><td>${esc(m.date)}</td></tr>`).join('')}</tbody></table>`;
     const m = list.find(x => x.id === mailSel); S.read[m.id] = true; save();
-    $('#mailReader').innerHTML = `<div class="hdr"><b>From:</b><span>${esc(m.from)}</span><b>Subject:</b><span>${esc(m.subject)}</span><b>Date:</b><span>${esc(m.date)}</span></div><div class="msg">${m.body}${m.caseId ? `<p class="open-case"><button class="btn primary" data-opencase="${m.caseId}">${floppy(m.caseId, true).replace('<svg', '<svg width="16" height="16"')}Insert ${esc(caseOf(m.caseId).disk)} and open Case ${m.caseId}</button></p>` : ''}</div>`;
+    const att = (m.attachments || []).map(docOf).filter(Boolean);
+    $('#mailReader').innerHTML = `<div class="hdr"><b>From:</b><span>${esc(m.from)}</span><b>Subject:</b><span>${esc(m.subject)}</span><b>Date:</b><span>${esc(m.date)}</span></div>${att.length ? `<div class="attach">${ICON.clip}<span class="lbl">Attached:</span>${att.map(d => `<button class="btn" data-openatt="${d.id}">${ICON[d.type]}${esc(d.name)} (${d.size})</button>`).join('')}</div>` : ''}<div class="msg">${m.body}${m.caseId ? `<p class="open-case"><button class="btn primary" data-opencase="${m.caseId}">${floppy(m.caseId, true).replace('<svg', '<svg width="16" height="16"')}Insert ${esc(caseOf(m.caseId).disk)} and open Case ${m.caseId}</button></p>` : ''}</div>`;
     $('#mailStatus').textContent = `${list.length} message(s), ${unreadCount()} unread`;
     renderIcons();
   }
@@ -1161,6 +1320,7 @@ const CASES = [{"id": 1, "title": "The Logged-In Machine", "disk": "BASICS.DSK",
     const f = e.target.closest('[data-folder]'); if (f) { mailFolder = f.dataset.folder; mailSel = null; renderMail(); return; }
     const r = e.target.closest('[data-mail]'); if (r) { mailSel = r.dataset.mail; renderMail(); return; }
     const oc = e.target.closest('[data-opencase]'); if (oc) openCase(+oc.dataset.opencase);
+    const at = e.target.closest('[data-openatt]'); if (at) openDoc(at.dataset.openatt);
   });
   function openCase(id) { S.cur = id; if (!S.insertedDisk[id]) S.tab = 'lesson'; save(); openWin('w-qa'); }
 
@@ -1208,6 +1368,12 @@ HOW TO PLAY
 6. SUBMIT ANSWER at the bottom of Investigate.
    Right answer = next case unlocks.
 
+SAVING
+Your progress saves automatically in this
+browser. To carry on from another computer,
+use your shift code: Start > My shift code.
+It is also printed at the top of Case Notes.
+
 STUCK?
 - Every task has 3 hints. The 3rd is the answer.
 - Disko explains error messages in plain words.
@@ -1244,18 +1410,20 @@ and MySQL too.`);
   /* ---------- desktop icons ---------- */
   function renderIcons() {
     const u = unreadCount();
-    const items = [['pc', 'My Computer', 'w-pc'], ['mail', 'Inbox', 'w-mail', u], ['qa', 'Query Analyzer', 'w-qa'], ['board', 'Evidence Board', 'w-board'], ['notes', 'Case Notes.txt', 'w-notes'], ['chat', 'HarrowChat', 'w-chat'], ['readme', 'READ ME FIRST.txt', 'w-readme'], ['bin', 'Recycle Bin', 'w-bin']];
+    const items = [['pc', 'My Computer', 'w-pc'], ['mail', 'Inbox', 'w-mail', u], ['docs', 'My Documents', 'w-docs', typeof unreadDocs === 'function' && db ? unreadDocs() : 0], ['qa', 'Query Analyzer', 'w-qa'], ['ledger', 'Records Ledger', 'w-ledger'], ['board', 'Evidence Board', 'w-board'], ['notes', 'Case Notes.txt', 'w-notes'], ['chat', 'HarrowChat', 'w-chat'], ['readme', 'READ ME FIRST.txt', 'w-readme'], ['bin', 'Recycle Bin', 'w-bin']];
     $('#icons').innerHTML = items.map(([ic, n, w, c]) => `<button class="icon" data-open="${w}"><span class="ic">${ICON[ic]}${c ? `<span class="count">${c}</span>` : ''}</span><span class="nm">${esc(n)}</span></button>`).join('');
   }
   $('#icons').addEventListener('click', e => { const b = e.target.closest('[data-open]'); if (b) { zoomSrc = $('.ic', b); openWin(b.dataset.open); } });
 
   const OPENERS = {
-    'w-board': renderBoard, 'w-mail': renderMail, 'w-notes': renderNotes, 'w-pc': renderPc, 'w-bin': renderBin, 'w-chat': () => renderChat(false),
+    'w-docs': renderDocs, 'w-ledger': renderLedger, 'w-board': renderBoard, 'w-mail': renderMail, 'w-notes': renderNotes, 'w-pc': renderPc, 'w-bin': renderBin, 'w-chat': () => renderChat(false),
     'w-qa': () => { renderCaseSel(); renderTab(); renderTableStrip(); if (!S.insertedDisk[S.cur]) setCase(S.cur); }
   };
 
   /* ---------- start menu ---------- */
-  const START = [['qa', 'Query Analyzer', () => openWin('w-qa')], ['mail', 'Inbox', () => openWin('w-mail')], ['pc', 'My Computer', () => openWin('w-pc')], ['board', 'Evidence Board', () => openWin('w-board')], ['notes', 'Case Notes', () => openWin('w-notes')], ['readme', 'Read Me First', () => openWin('w-readme')], 'sep',
+  const START = [['qa', 'Query Analyzer', () => openWin('w-qa')], ['mail', 'Inbox', () => openWin('w-mail')], ['docs', 'My Documents', () => openWin('w-docs')], ['pc', 'My Computer', () => openWin('w-pc')], ['ledger', 'Records Ledger', () => openWin('w-ledger')], ['board', 'Evidence Board', () => openWin('w-board')], ['notes', 'Case Notes', () => openWin('w-notes')], ['readme', 'Read Me First', () => openWin('w-readme')], 'sep',
+    ['clock', 'My shift code...', () => clockOut()],
+    ['reader', 'Enter a shift code...', () => showLogon('code')], 'sep',
     ['reset', 'Reset all progress...', async () => { const r = await dialog({ title: 'Reset progress', icon: 'warn', html: 'Start the whole game again from Case 1?<br>All solved cases and notes will be erased.', buttons: ['Yes', 'No'] }); if (r === 'Yes') { S = blank(); save(); resetDb(); location.reload(); } }],
     ['shut', 'Shut Down...', () => { $('#shutdown').hidden = false; }]];
   $('#startList').innerHTML = START.filter(Boolean).map((s, i) => s === 'sep' ? '<li class="sep"></li>' : `<li><button data-start="${i}">${ICON[s[0]]}<span>${esc(s[1])}</span></button></li>`).join('');
@@ -1306,7 +1474,7 @@ and MySQL too.`);
     await wait(1700);
     $('#splash').hidden = true;
     try { sessionStorage.setItem(KEY + '-boot', '1'); } catch (e) {}
-    startDesktop(true);
+    renderIcons(); renderTray(); tick(); showLogon('boot');
   }
   function startDesktop(first) {
     renderIcons(); renderTray(); tick();
@@ -1329,7 +1497,7 @@ and MySQL too.`);
   let stickyBack = false;
   function renderSticky() {
     const el = $('#sticky');
-    el.innerHTML = stickyBack ? `look closer:<br>${esc(NOTE_TIPS[phase()])}<small>- E.</small><div class="tip">(click to flip back)</div>` : `The truth is in the tables.<br>Trust the data, not the people.<small>- E.</small>`;
+    el.innerHTML = stickyBack ? `<span class="k">LOOK CLOSER</span>${esc(NOTE_TIPS[phase()])}<small>- E.V.</small><div class="tip">Click to flip back</div>` : `<span class="k">MEMO · RECORDS DIV.</span>The truth is in the tables.<br>Trust the data, not the people.<small>- E.V.</small>`;
   }
   $('#sticky').addEventListener('click', () => { stickyBack = !stickyBack; renderSticky(); SFX.beep(); });
 
@@ -1352,7 +1520,8 @@ and MySQL too.`);
       { id: 'clip', x: 200, y: 236, r: 3, kind: 'clip', info: 'Everyone said Y2K passed quietly. Not everyone was watching the case records that night.' },
       { id: 'kessler', x: 400, y: 22, r: 2, kind: solved(1) ? 'polaroid' : 'down', face: 'kessler', cap: 'Markus Kessler', role: 'Y2K Task Force (closed)', stamp: solved(2) ? ['suspect', 'red'] : null, info: 'Markus Kessler, badge B-0471. Still listed in a department shut down in January 2000.' },
       { id: 'dana', x: 760, y: 40, r: 5, kind: solved(2) ? 'polaroid' : 'down', face: 'dana', cap: 'Dana Pike', role: 'Records clerk', stamp: solved(2) ? ['cleared', 'green'] : null, info: 'Dana Pike was in the Server Room until 23:02, pulling paper files for Elena. Cleared.' },
-      { id: 'c1', x: 40, y: 330, r: -2, kind: solved(1) ? 'idx' : 'none', h: 'CASE 1 · STAFF TABLE', b: 'B-0471 still active.\nDept closed Jan 2000.', info: caseOf(1).final.clue },
+      { id: 'c1', x: 40, y: 330, r: -2, kind: solved(1) ? 'idx' : 'none', h: 'CASE 1 · STAFF + PBX', b: 'B-0471 still active.\nExt 999 rang Elena 22:51.', info: caseOf(1).final.clue },
+      { id: 'cctv', x: 590, y: 150, r: -5, kind: solved(2) ? 'still' : 'none', info: 'CAM 04, 23:47:12. A figure with a badge on the left lapel, carrying a case into the Server Room. Open CAM04_2001-11-09_2347.jpg in My Documents.' },
       { id: 'c2', x: 300, y: 350, r: 2, kind: solved(2) ? 'idx' : 'none', h: 'CASE 2 · BADGE LOG', b: 'Fri 9 Nov, Server Room\nin 23:47 - out: NULL', info: caseOf(2).final.clue },
       { id: 'c3', x: 560, y: 330, r: -3, kind: solved(3) ? 'idx' : 'none', h: 'CASE 3 · CASE RECORDS', b: '31.12.1999 - 4 cases buried\nby MKESSLER + fake record', info: caseOf(3).final.clue },
       { id: 'boss', x: 790, y: 300, r: 4, kind: solved(3) ? 'polaroid' : 'none', face: 'unknown', cap: 'Who gave the orders?', role: 'Signed the contract?', info: 'Kessler couldn\'t approve a single invoice. Someone above him did. (Case 4 onwards.)' }
@@ -1365,8 +1534,9 @@ and MySQL too.`);
       if (i.kind === 'polaroid') inner = `${portrait(i.face)}<div class="cap">${esc(i.cap)}</div><div class="role">${esc(i.role)}</div>${i.stamp ? `<span class="rstamp ${i.stamp[1]}" style="left:22px;top:62px">${esc(i.stamp[0])}</span>` : ''}`;
       else if (i.kind === 'down') inner = `<div class="facedown"><div>?<small>not yet found</small></div></div>`;
       else if (i.kind === 'idx') inner = `<div class="h">${esc(i.h)}</div><div class="b">${esc(i.b).replace(/\n/g, '<br>')}</div>`;
+      else if (i.kind === 'still') inner = `<div style="width:150px;padding:6px 6px 8px"><div style="transform:scale(1);width:138px;overflow:hidden">${docOf('cctv').html().replace(/<div class="caption">[\s\S]*$/, '')}</div><div class="role" style="font:12px/1.2 var(--type);color:#333;margin-top:5px">CAM 04 · 23:47:12</div></div>`;
       else if (i.kind === 'clip') inner = `<div class="mast">Harrow Bay Gazette · 1 Jan 2000</div><div class="hl">Y2K bug a no-show, city systems "fine"</div><div class="d">Records migration finished on time, says contractor Northgate Systems.</div>`;
-      const cls = i.kind === 'down' ? 'polaroid' : i.kind;
+      const cls = i.kind === 'down' ? 'polaroid' : i.kind === 'still' ? 'still' : i.kind;
       return `<button class="pcard ${cls}" data-card="${i.id}" style="left:${i.x}px;top:${i.y}px;transform:rotate(${i.r}deg)" aria-label="${esc(i.cap || i.h || 'clipping')}"><span class="pin"></span>${inner}</button>`;
     }).join('');
     host.innerHTML = GRAIN + `<div class="plate">MISSING PERSON · E. VOSS · 09-NOV-2001</div>` + html + '<svg class="strings" id="strings"></svg>';
@@ -1376,15 +1546,15 @@ and MySQL too.`);
   function drawStrings() {
     const svg = $('#strings'); if (!svg) return; const box = $('#board').getBoundingClientRect();
     const pin = id => { const el = $(`[data-card="${id}"] .pin`); if (!el) return null; const r = el.getBoundingClientRect(); return [r.left - box.left + r.width / 2, r.top - box.top + r.height / 2]; };
-    const links = [['elena', 'kessler'], ['kessler', 'c1'], ['kessler', 'c2'], ['c2', 'dana', 1], ['kessler', 'c3'], ['c3', 'boss'], ['elena', 'clip']];
+    const links = [['elena', 'kessler'], ['kessler', 'c1'], ['kessler', 'c2'], ['c2', 'dana', 1], ['kessler', 'c3'], ['c3', 'boss'], ['elena', 'clip'], ['cctv', 'c2']];
     svg.innerHTML = links.map(([a, b, dashed]) => { const p = pin(a), q = pin(b); if (!p || !q) return ''; const mx = (p[0] + q[0]) / 2, my = Math.max(p[1], q[1]) + 18 + Math.abs(p[0] - q[0]) * .06; return `<path d="M${p[0]} ${p[1]} Q${mx} ${my} ${q[0]} ${q[1]}" fill="none" stroke="${dashed ? '#1d7a2e' : 'var(--string)'}" stroke-width="2" ${dashed ? 'stroke-dasharray="6 5"' : ''} opacity=".9"/>`; }).join('');
   }
-  $('#board').addEventListener('click', e => { const c = e.target.closest('[data-card]'); if (!c) return; const it = boardItems().find(i => i.id === c.dataset.card); if (it.kind === 'down') say('That card is face down. Solve the next case to turn it over.'); else say(esc(it.info)); });
+  $('#board').addEventListener('click', e => { const c = e.target.closest('[data-card]'); if (!c) return; const it = boardItems().find(i => i.id === c.dataset.card); if (it.kind === 'down') say('That card is face down. Solve the next case to turn it over.'); else if (it.id === 'cctv') { say(esc(it.info)); openDoc('cctv'); } else say(esc(it.info)); });
 
   /* ---------- case closed stamp ---------- */
   function stampCase(c) {
     const el = $('#stamp');
-    el.innerHTML = `<div class="folder"><div class="l1">HARROW BAY P.D. · CASE FILE</div><div class="l2">Case ${c.id}: ${esc(c.title)}</div><div class="l3">Analyst: NEW TEMP, badge B-2301<br>Closed: 12 NOV 2001 · ${storyClock()}</div><div class="ink">CASE CLOSED</div></div>`;
+    el.innerHTML = `<div class="folder"><div class="l1">HARROW BAY P.D. · CASE FILE</div><div class="l2">Case ${c.id}: ${esc(c.title)}</div><div class="l3">Analyst: ${esc(badgeName().toUpperCase())}, badge B-2301<br>Closed: 12 NOV 2001 · ${storyClock()}<br>Shift code: ${shiftCode()}</div><div class="ink">CASE CLOSED</div></div>`;
     el.hidden = false; setTimeout(() => tone(90, 0, .18, 'square', .09), reduced ? 0 : 480);
     setTimeout(() => { el.hidden = true; }, reduced ? 1200 : 2600);
   }
@@ -1433,6 +1603,327 @@ and MySQL too.`);
   function stopSaver() { saverOn = false; cancelAnimationFrame(saverRaf); $('#saver').hidden = true; }
 
 
+
+
+  /* ---------- documents ---------- */
+  const DOCS = [
+    { id: 'hr_memo', name: 'HR_Memo_Y2K_TaskForce.pdf', type: 'pdf', size: '24 KB', date: '14/01/2000', when: () => true, html: () => `
+      <div class="page"><div class="lh"><div><b>HARROW BAY POLICE DEPARTMENT</b><small>HUMAN RESOURCES · 1 HARBOUR SQUARE</small></div><small>REF HR/2000/014</small></div>
+      <h4>MEMORANDUM</h4>
+      <div class="memo-h"><span>TO:</span><span>All Department Heads</span><span>FROM:</span><span>Human Resources</span><span>CC:</span><span>Deputy Chief A. Holt</span><span>DATE:</span><span>14 January 2000</span><span>RE:</span><span>Y2K Task Force: disbanded</span></div>
+      <p>The Y2K Task Force has completed its work. The date rollover passed without incident and the records migration by Northgate Systems is complete.</p>
+      <p>With effect from 31 January 2000 the Task Force is closed. Members are reassigned as follows:</p>
+      <table class="t"><tr><th>Member</th><th>Badge</th><th>From 31 Jan 2000</th></tr><tr><td>G. Fenwick</td><td>B-0522</td><td>Returns to IT</td></tr><tr><td>P. Sandoval</td><td>B-1830</td><td>Returns to IT</td></tr><tr><td>M. Kessler</td><td>B-0471</td><td>Contract ended</td></tr></table>
+      <p>IT will <span class="hl">deactivate badge B-0471</span> and disconnect the Task Force hotline, <span class="hl">extension 999</span>. Any further staff records for the Task Force should be removed.</p>
+      <div class="sig">Approved for distribution:<br><br>A. Holt<br>Deputy Chief of Police</div>
+      <div class="ink blue" style="right:40px;bottom:46px">FILED · HR</div></div>` },
+    { id: 'pbx', name: 'PBX_Call_Report.pdf', type: 'pdf', size: '9 KB', date: '12/11/2001', when: () => !!prog(1)['1i2'], html: () => `
+      <div class="page green"><pre>HARBOUR TELECOM PBX-2000          CALL DETAIL REPORT
+SITE: HBPD 1 HARBOUR SQ            PRINTED 12-NOV-2001 09:02
+------------------------------------------------------------
+EXTENSION: 214   USER: VOSS E      DATE: 09-NOV-2001
+------------------------------------------------------------
+TIME    FROM   DURATION   STATUS
+09:12   100    00:03:10   ANSWERED
+13:40   300    00:01:02   ANSWERED
+17:02   100    00:00:45   ANSWERED
+21:40   211    --:--:--   NO ANSWER   (4 RINGS)
+22:51   999    --:--:--   NO ANSWER   (6 RINGS)
+22:53   999    --:--:--   NO ANSWER   (6 RINGS)
+------------------------------------------------------------
+TOTAL CALLS: 6     ANSWERED: 3     MISSED: 3
+
+*** WARNING: EXT 999 IS LISTED AS DISCONNECTED
+*** SINCE 31-JAN-2000. CHECK LINE ASSIGNMENT.
+------------------------------------------------------------
+                                   END OF REPORT    PAGE 1</pre></div>` },
+    { id: 'floor_plan', name: 'Basement_B2_Security_Plan.pdf', type: 'pdf', size: '61 KB', date: '03/05/1999', when: () => S.unlocked >= 2, html: () => `
+      <div class="page plan"><svg viewBox="0 0 600 440" font-family="Courier New, monospace"><defs><pattern id="bp" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="#2f6aa6" stroke-width=".6"/></pattern></defs><rect width="600" height="440" fill="#1d4f86"/><rect width="600" height="440" fill="url(#bp)"/>
+      <g fill="none" stroke="#e8f1fb" stroke-width="2.5"><rect x="40" y="60" width="210" height="140"/><rect x="330" y="60" width="230" height="140"/><rect x="40" y="260" width="150" height="120"/><rect x="230" y="260" width="140" height="120"/><rect x="410" y="260" width="150" height="120"/><path d="M40 200v60M560 200v60M250 230H330"/></g>
+      <path d="M40 230H560" stroke="#e8f1fb" stroke-width="1" stroke-dasharray="6 6"/>
+      <g fill="#e8f1fb" font-size="13" text-anchor="middle"><text x="145" y="135">RECORDS ROOM</text><text x="445" y="135">SERVER ROOM</text><text x="115" y="325">EVIDENCE</text><text x="115" y="341">LOCKER</text><text x="300" y="325">DISPATCH</text><text x="485" y="325">STAIRS / EXIT</text><text x="300" y="224" font-size="11">MAIN CORRIDOR</text></g>
+      <g fill="#f2b33d" font-size="11"><rect x="138" y="196" width="14" height="8"/><text x="160" y="214">R1</text><rect x="438" y="196" width="14" height="8"/><text x="400" y="214">R2</text><rect x="108" y="256" width="14" height="8"/><text x="128" y="252">R3</text><rect x="478" y="256" width="14" height="8"/><text x="498" y="252">R4</text></g>
+      <g fill="#ff6a5a" font-size="11"><path d="M520 236l14-8v16z"/><text x="540" y="222">CAM 04</text><path d="M520 236L455 205" stroke="#ff6a5a" stroke-dasharray="3 3"/></g>
+      <g fill="#cfe3f5" font-size="11"><rect x="360" y="396" width="200" height="34" fill="none" stroke="#e8f1fb"/><text x="368" y="410">HBPD BASEMENT B2</text><text x="368" y="424">SECURITY PLAN · REV C · 1999</text><text x="40" y="410">R = BADGE READER</text><text x="40" y="424">CAM 04 COVERS SERVER RM DOOR</text></g>
+      <text x="40" y="38" fill="#e8f1fb" font-size="15" font-weight="700">HARROW BAY P.D. · BASEMENT LEVEL B2</text></svg></div>` },
+    { id: 'cctv', name: 'CAM04_2001-11-09_2347.jpg', type: 'jpg', size: '38 KB', date: '12/11/2001', when: () => !!S.solved[2], html: () => `
+      <div class="page cctv"><svg viewBox="0 0 640 480" font-family="Courier New, monospace"><defs><pattern id="noise" width="6" height="6" patternUnits="userSpaceOnUse"><rect width="6" height="6" fill="#1a1d1b"/><rect x="1" y="2" width="1" height="1" fill="#3a3f3b"/><rect x="4" y="4" width="1" height="1" fill="#2c302d"/><rect x="3" y="0" width="1" height="1" fill="#454a46"/></pattern><pattern id="scan" width="4" height="4" patternUnits="userSpaceOnUse"><rect width="4" height="2" fill="rgba(0,0,0,.25)"/></pattern></defs>
+      <rect width="640" height="480" fill="url(#noise)"/>
+      <path d="M0 0L200 150H440L640 0z" fill="#2a2e2b"/><path d="M0 480L200 330H440L640 480z" fill="#252826"/><path d="M0 0L200 150V330L0 480z" fill="#202321"/><path d="M640 0L440 150V330L640 480z" fill="#1d201e"/>
+      <rect x="260" y="168" width="120" height="162" fill="#3b403c" stroke="#5b615c"/><rect x="282" y="180" width="76" height="16" fill="#5d645e"/><text x="320" y="192" text-anchor="middle" font-size="10" fill="#1a1d1b">SERVER RM</text><rect x="364" y="250" width="8" height="10" fill="#7dff6a" opacity=".8"/>
+      <g fill="#0b0c0b"><ellipse cx="318" cy="250" rx="18" ry="20"/><path d="M290 268q28-12 56 0l10 90h-76z"/><rect x="292" y="356" width="14" height="40"/><rect x="330" y="356" width="14" height="40"/><path d="M346 290l30 22-6 8-30-18z"/><rect x="368" y="306" width="22" height="30" fill="#151715"/></g>
+      <rect x="300" y="296" width="10" height="6" fill="#d8dcd0" opacity=".7"/>
+      <rect width="640" height="480" fill="url(#scan)"/>
+      <g fill="#e8f0e2" font-size="18"><text x="20" y="34">CAM04  SERVER RM DOOR</text><text x="20" y="460">09-11-2001  23:47:12</text></g><g fill="#ff3a2a" font-size="18"><circle cx="560" cy="28" r="7"/><text x="574" y="34">REC</text></g></svg></div>
+      <div class="caption">Still printed from the security tape at the Chief's request. Face not visible. Badge clip on the left lapel. Carrying a case.</div>` },
+    { id: 'case_1997', name: 'Scan_CaseFile_1997-0418.pdf', type: 'pdf', size: '112 KB', date: '12/11/2001', when: () => S.unlocked >= 3, html: () => `
+      <div class="page folder"><div class="tab"></div><div class="lh" style="border-color:#3b2a10"><div><b style="font-family:var(--type)">HARROW BAY P.D. · CASE FILE</b><small>PAPER ORIGINAL · ARCHIVE B2 · SHELF 14</small></div><small>No. 1997-0418</small></div>
+      <h4 style="font-family:var(--type);letter-spacing:.06em">INVOICE FRAUD, PORT AUTHORITY</h4>
+      <div class="memo-h" style="border-color:#8a7442"><span>OPENED:</span><span>18 April 1997</span><span>LEAD:</span><span>Det. Sgt F. Moreno</span><span>SUMMARY:</span><span>Forged invoices sent to the Port Authority by a shell supplier. Two clerks charged. The supplier's director was never identified.</span><span>NOTE:</span><span>Same supplier later bid for city IT contracts.</span></div>
+      <p style="font-size:12px">Retrieved from archive by D. Pike, 09/11/2001, at the request of E. Voss.</p>
+      <div class="ink" style="left:60px;bottom:40px;font-size:30px">CHARGED</div>
+      <div class="sig" style="text-align:right">Approved: Cpt. R. Mallory<br>22 Oct 1997</div></div>` },
+    { id: 'rollover', name: 'Y2K_Rollover_Report.pdf', type: 'pdf', size: '31 KB', date: '03/01/2000', when: () => !!S.solved[3], html: () => `
+      <div class="page"><div class="lh"><div><b>Y2K TASK FORCE</b><small>HARROW BAY POLICE DEPARTMENT</small></div><small>REPORT Y2K/FINAL</small></div>
+      <h4>ROLLOVER INCIDENT REPORT</h4>
+      <div class="memo-h"><span>PERIOD:</span><span>31 Dec 1999 22:00 to 1 Jan 2000 02:00</span><span>STATUS:</span><span><b>NO INCIDENTS</b></span><span>DATE:</span><span>3 January 2000</span></div>
+      <p>All systems were monitored through the date rollover. No failures were recorded.</p>
+      <table class="t"><tr><th>On duty</th><th>Role</th><th>Location</th></tr><tr><td>M. Kessler</td><td>Systems</td><td>Server Room</td></tr><tr><td>G. Fenwick</td><td>On call</td><td>Off site</td></tr></table>
+      <p>Database sessions during rollover:</p>
+      <table class="t"><tr><th>Login</th><th>From</th><th>To</th><th>Purpose</th></tr><tr><td class="hl">MKESSLER</td><td>23:02</td><td>00:47</td><td>Routine compliance testing</td></tr></table>
+      <div class="sig">Prepared by: M. Kessler, Systems Consultant<br><br>Approved: <span class="hl">Adrian Holt</span>, Deputy Chief</div>
+      <div class="ink" style="right:44px;bottom:44px">CONFIDENTIAL</div></div>` }
+  ];
+  const docOf = id => DOCS.find(d => d.id === id);
+  const docsAvailable = () => DOCS.filter(d => d.when());
+  let knownDocs = null;
+  function checkNewDocs(quiet) {
+    const avail = docsAvailable().map(d => d.id);
+    if (knownDocs && !quiet) avail.filter(id => !knownDocs.includes(id)).forEach((id, i) => setTimeout(() => { const d = docOf(id); SFX.beep(); balloon(d.type === 'jpg' ? 'jpg' : 'pdf', 'New document', `${d.name} was added to My Documents.`, null); $('#balloon').onclick = () => { $('#balloon').hidden = true; openDoc(id); }; }, 600 + i * 7500));
+    knownDocs = avail; renderIcons(); if (!$('#w-docs').hidden) renderDocs();
+  }
+  let curDoc = null, zoom = 1;
+  function openDoc(id) {
+    const d = docOf(id); if (!d || !d.when()) return;
+    curDoc = id; S.docsSeen[id] = true; save();
+    $('#readerView').innerHTML = `<div class="sheet" style="transform:scale(${zoom})">${d.html()}</div>`;
+    setTitle('w-reader', `Harrow Reader - ${d.name}`);
+    $('#readerStatus').textContent = d.name + ' · ' + d.size; $('#readerSize').textContent = d.type === 'jpg' ? '640 x 480' : '8.5 x 11 in';
+    openWin('w-reader'); $('#readerView').scrollTop = 0; renderIcons(); if (!$('#w-docs').hidden) renderDocs();
+  }
+  function setZoom(z) { zoom = Math.max(.75, Math.min(1.25, z)); $('#zoomSel').value = String(zoom); const sh = $('#readerView .sheet'); if (sh) sh.style.transform = `scale(${zoom})`; }
+  $('#zoomSel').addEventListener('change', e => setZoom(+e.target.value));
+  $('#zoomIn').addEventListener('click', () => setZoom(zoom + .25));
+  $('#zoomOut').addEventListener('click', () => setZoom(zoom - .25));
+  function renderDocs() {
+    const list = docsAvailable();
+    $('#docsBody').innerHTML = list.map(d => `<button class="file" data-doc="${d.id}">${ICON[d.type]}<span>${esc(d.name)}</span><small>${d.date} · ${d.size}</small>${S.docsSeen[d.id] ? '' : '<b class="new">NEW</b>'}</button>`).join('') || '<div style="padding:10px;color:#555">No documents yet.</div>';
+    $('#docsStatus').textContent = `${list.length} object(s) · ${list.filter(d => !S.docsSeen[d.id]).length} unread`;
+  }
+  $('#docsBody').addEventListener('click', e => { const b = e.target.closest('[data-doc]'); if (b) openDoc(b.dataset.doc); });
+  const unreadDocs = () => docsAvailable().filter(d => !S.docsSeen[d.id]).length;
+
+
+  /* ---------- ID card: save + load ---------- */
+  const CARD_KEY = 'HBPD-SAVE';
+  const CRC = (() => { const t = new Uint32Array(256); for (let n = 0; n < 256; n++) { let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1; t[n] = c >>> 0; } return t; })();
+  function crc32(bytes) { let c = 0xffffffff; for (let i = 0; i < bytes.length; i++) c = CRC[(c ^ bytes[i]) & 255] ^ (c >>> 8); return (c ^ 0xffffffff) >>> 0; }
+  const b64enc = str => { const u = new TextEncoder().encode(str); let s = ''; for (let i = 0; i < u.length; i += 0x8000) s += String.fromCharCode.apply(null, u.subarray(i, i + 0x8000)); return btoa(s); };
+  const b64dec = b64 => { const s = atob(b64); const u = new Uint8Array(s.length); for (let i = 0; i < s.length; i++) u[i] = s.charCodeAt(i); return new TextDecoder().decode(u); };
+  function bytesToB64(u) { let s = ''; for (let i = 0; i < u.length; i += 0x8000) s += String.fromCharCode.apply(null, u.subarray(i, i + 0x8000)); return btoa(s); }
+  async function addTextChunk(blob, key, text) {
+    const png = new Uint8Array(await blob.arrayBuffer());
+    const data = new TextEncoder().encode(key + '\0' + text);
+    const chunk = new Uint8Array(12 + data.length); const dv = new DataView(chunk.buffer);
+    dv.setUint32(0, data.length); chunk.set([116, 69, 88, 116], 4); chunk.set(data, 8);
+    dv.setUint32(8 + data.length, crc32(chunk.subarray(4, 8 + data.length)));
+    const iend = png.length - 12; const out = new Uint8Array(png.length + chunk.length);
+    out.set(png.subarray(0, iend)); out.set(chunk, iend); out.set(png.subarray(iend), iend + chunk.length);
+    return new Blob([out], { type: 'image/png' });
+  }
+  function readTextChunk(buf, key) {
+    const u = new Uint8Array(buf); const sig = [137, 80, 78, 71, 13, 10, 26, 10];
+    if (u.length < 16 || sig.some((v, i) => u[i] !== v)) return null;
+    const dv = new DataView(u.buffer, u.byteOffset); let o = 8;
+    while (o + 12 <= u.length) {
+      const len = dv.getUint32(o), type = String.fromCharCode(u[o + 4], u[o + 5], u[o + 6], u[o + 7]);
+      if (type === 'tEXt') { const d = u.subarray(o + 8, o + 8 + len); const z = d.indexOf(0); if (z > 0 && new TextDecoder().decode(d.subarray(0, z)) === key) return new TextDecoder().decode(d.subarray(z + 1)); }
+      if (type === 'IEND') break; o += 12 + len;
+    }
+    return null;
+  }
+  function badgeName() { return (S.name || 'New Temp').trim().slice(0, 22) || 'New Temp'; }
+  // logon
+  function hasProgress() { return Object.keys(S.progress).some(k => Object.keys(S.progress[k] || {}).length) || Object.keys(S.solved).length > 0; }
+  function showLogon(mode) {
+    const el = $('#logon'); el.hidden = false; newArmed = false;
+    const prog = hasProgress(), solvedN = Object.keys(S.solved).length, boot = mode === 'boot';
+    el.innerHTML = `<div class="logon raised win active" style="position:relative">
+      <div class="titlebar"><span class="t">${boot ? 'Welcome to HarrowOS' : 'Enter shift code'}</span>${boot ? '' : '<button class="btn tb-btn" data-lx aria-label="Close">×</button>'}</div>
+      <div class="bandtop">${ICON.lighthouse}<div><b>Harrow<i>OS</i> 98</b><small>Harrow Bay Police Department · Records Division</small></div></div>
+      <div class="lsimple">
+        ${boot && prog ? `<div class="last">SAVED SHIFT<br><b>${esc(badgeName().toUpperCase())}</b> · ${solvedN}/10 CASES CLOSED</div><button class="btn primary big" data-lcontinue>Continue shift</button>` : ''}
+        ${boot && !prog ? `<label for="lname">Your name</label><input class="field" id="lname" maxlength="22" placeholder="New Temp" autocomplete="off"><button class="btn primary big" data-lnew>Start shift</button>` : ''}
+        ${boot && prog ? `<button class="btn" data-lnew>Start a new game</button><span class="warn" id="lwarn" hidden>This replaces your saved shift. Write down your shift code first if you want it. Click again to confirm.</span>` : ''}
+        <div class="codezone"${boot ? ' hidden' : ''} id="codeZone"><label for="lcode">Shift code</label>
+          <form class="codebox" id="codeForm"><input class="field" id="lcode" maxlength="20" placeholder="HBPD-XXXXX-XXXXX" autocomplete="off" spellcheck="false"><button class="btn primary" type="submit">Clock in</button></form>
+          <div class="cerr" id="lcerr"></div></div>
+        ${boot ? `<button class="linkish" data-showcode>Playing on another computer? Enter your shift code</button>` : ''}
+        <p class="hint">Your progress saves automatically in this browser.</p>
+      </div></div>`;
+    if (!boot) setTimeout(() => $('#lcode') && $('#lcode').focus(), 50);
+  }
+  let newArmed = false;
+  $('#logon').addEventListener('click', e => {
+    if (e.target.closest('[data-lx]')) { $('#logon').hidden = true; return; }
+    if (e.target.closest('[data-showcode]')) { $('#codeZone').hidden = false; e.target.closest('[data-showcode]').hidden = true; $('#lcode').focus(); return; }
+    if (e.target.closest('[data-lcontinue]')) { $('#logon').hidden = true; startDesktop(true); return; }
+    if (e.target.closest('[data-lnew]')) {
+      if (hasProgress() && !newArmed) { newArmed = true; const w = $('#lwarn'); if (w) w.hidden = false; return; }
+      const nm = (($('#lname') && $('#lname').value) || '').trim().slice(0, 22) || 'New Temp';
+      S = blank(); S.name = nm; save(); resetDb(); try { sessionStorage.setItem(KEY + '-boot', '1'); } catch (er) {}
+      $('#logon').hidden = true; newArmed = false; knownDocs = null; checkNewDocs(true); startDesktop(true); renderSticky(); renderNotes();
+    }
+  });
+  $('#logon').addEventListener('submit', e => { if (e.target.id === 'codeForm') { e.preventDefault(); clockIn(); } });
+  $('#logon').addEventListener('input', e => { if (e.target.id === 'lcode') { const ce = $('#lcerr'); if (ce) ce.textContent = ''; } });
+  /* ---------- shift code (save without files) ---------- */
+  const B32 = '0123456789ABCDEFGHJKMNPQRSTVWXYZ';
+  const TASK_LIST = () => CASES.flatMap(c => allTasks(c).map(t => ({ c: c.id, t })));
+  function shiftCode() {
+    let solved = 0n, tasks = 0n;
+    CASES.forEach(c => { if (S.solved[c.id]) solved |= 1n << BigInt(c.id - 1); });
+    TASK_LIST().forEach((x, i) => { if (prog(x.c)[x.t.id]) tasks |= 1n << BigInt(i); });
+    const body = (1n << 38n) | (solved << 28n) | tasks; // 4-bit version (1) + 10 solved + 28 tasks
+    const chk = BigInt(crc32(new TextEncoder().encode(body.toString())) & 255);
+    let v = (body << 8n) | chk, out = '';
+    for (let i = 0; i < 10; i++) { out = B32[Number(v & 31n)] + out; v >>= 5n; }
+    return `HBPD-${out.slice(0, 5)}-${out.slice(5)}`;
+  }
+  function parseShiftCode(raw) {
+    let c = String(raw || '').toUpperCase().replace(/O/g, '0').replace(/[IL]/g, '1').replace(/[^0-9A-Z]/g, '');
+    if (c.startsWith('HBPD')) c = c.slice(4);
+    if (c.length !== 10) return null;
+    let v = 0n; for (const ch of c) { const i = B32.indexOf(ch); if (i < 0) return null; v = (v << 5n) | BigInt(i); }
+    const chk = v & 255n, body = v >> 8n;
+    if ((body >> 38n) !== 1n) return null;
+    if (BigInt(crc32(new TextEncoder().encode(body.toString())) & 255) !== chk) return null;
+    return { solved: (body >> 28n) & 1023n, tasks: body & ((1n << 28n) - 1n) };
+  }
+  function stateFromCode(code, name) {
+    const NS = blank(); NS.name = name || 'New Temp';
+    TASK_LIST().forEach((x, i) => { if ((code.tasks >> BigInt(i)) & 1n) { (NS.progress[x.c] = NS.progress[x.c] || {})[x.t.id] = true; } });
+    let top = 0; CASES.forEach(c => { if ((code.solved >> BigInt(c.id - 1)) & 1n) { NS.solved[c.id] = true; top = Math.max(top, c.id); } });
+    NS.unlocked = Math.min(CASES.length, top + 1); NS.cur = NS.unlocked;
+    CASES.forEach(c => { if (c.id <= NS.unlocked) NS.insertedDisk[c.id] = true; if (c.id < NS.unlocked) NS.read['case' + c.id] = true; });
+    NS.read.help = true;
+    CASES.forEach(c => { allTasks(c).forEach(t => { if (NS.progress[c.id] && NS.progress[c.id][t.id] && t.found) NS.notes.push({ c: c.id, text: t.found, closed: false }); }); if (NS.solved[c.id]) { NS.notes.push({ c: c.id, text: 'CASE CLOSED: ' + c.final.clue, closed: true }); NS.chat.push(...c.final.messenger); } });
+    return NS;
+  }
+  function rebuildDb(NS) {
+    resetDb();
+    CASES.forEach(c => allTasks(c).forEach(t => { if (t.type === 'check' && NS.progress[c.id] && NS.progress[c.id][t.id]) { try { db.exec(t.solution); } catch (e) {} } }));
+    saveDb();
+  }
+  function restoreShift(NS) {
+    S = NS; save(); rebuildDb(NS);
+    try { sessionStorage.setItem(KEY + '-boot', '1'); } catch (e) {}
+    $('#logon').hidden = true; WIN_IDS.forEach(id => { const w = $('#' + id); if (w.dataset.open === '1') closeWin(id); });
+    knownDocs = null; checkNewDocs(true); DOCS.forEach(d => { if (d.when()) S.docsSeen[d.id] = true; }); save();
+    $('#sql').value = ''; renderSticky(); renderNotes(); tick(); startDesktop(true);
+  }
+  async function clockIn() {
+    const inp = $('#lcode'), err = $('#lcerr'), lcd = null, led = null;
+    const code = parseShiftCode(inp.value);
+    if (led) led.className = 'led amber'; if (lcd) lcd.innerHTML = 'CHECKING<br>CODE...';
+    for (let i = 0; i < 5; i++) tone(900 + i * 60, i * .07, .05, 'square', .03);
+    await wait(300);
+    if (!code) { if (led) led.className = 'led red'; if (lcd) lcd.innerHTML = 'INVALID<br>CODE'; SFX.err(); err.textContent = 'That code isn\'t valid. Check each character: codes look like HBPD-7K2QM-X9D4R.'; return; }
+    if (led) led.className = 'led green'; if (lcd) lcd.innerHTML = 'CLOCKED<br>IN'; SFX.ok(); err.textContent = '';
+    await wait(200);
+    const name = badgeName();
+    restoreShift(stateFromCode(code, name));
+    say(`Welcome back, <b>${esc(badgeName())}</b>. Shift code accepted: ${Object.keys(S.solved).length} case${Object.keys(S.solved).length === 1 ? '' : 's'} closed. Pick up in <b>Query Analyzer</b>.`, 'happy');
+  }
+  function clockOut() {
+    save(); const code = shiftCode(), solvedN = Object.keys(S.solved).length;
+    tone(220, 0, .05, 'square', .08); tone(140, .08, .14, 'square', .08);
+    const d = document.createElement('div'); d.className = 'dialog raised win active'; d.style.cssText = 'z-index:9400;position:fixed;width:min(440px,calc(100vw - 24px))';
+    d.innerHTML = `<div class="titlebar"><span class="t">My shift code</span><button class="btn tb-btn" data-x aria-label="Close">×</button></div>
+      <div class="sunken" style="background:#6f6f6a;padding:2px 0 12px"><div class="timecard"><div class="h"><span>HBPD TIME CARD</span><span>RECORDS DIV.</span></div>
+      <table><tr><td>NAME</td><td>${esc(badgeName().toUpperCase())}</td></tr><tr><td>BADGE</td><td>B-2301</td></tr><tr><td>DATE</td><td>MON 12 NOV 2001</td></tr><tr><td>IN</td><td>08:58</td></tr><tr><td>OUT</td><td class="punch">${storyClock()}</td></tr><tr><td>CASES CLOSED</td><td>${solvedN} / 10</td></tr></table>
+      <div class="lbl">SHIFT CODE</div><div class="code" id="tcCode">${code}</div><div class="out">CLOCKED OUT</div></div></div>
+      <div class="cardnote">Your progress already saves automatically in this browser. This code is only for playing on <b>another computer or browser</b>: write it down, then choose "Enter your shift code" at logon.</div>
+      <div class="actions"><button class="btn primary" data-copy>Copy code</button><button class="btn" data-x>Close</button></div>`;
+    $('#dialogHost').appendChild(d);
+    d.addEventListener('click', async e => {
+      if (e.target.closest('[data-x]')) { d.remove(); return; }
+      if (e.target.closest('[data-copy]')) {
+        try { await navigator.clipboard.writeText(code); say('Shift code copied. Paste it somewhere safe.', 'happy'); }
+        catch (er) { const r = document.createRange(); r.selectNodeContents($('#tcCode', d)); const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r); say('Copying isn\'t allowed here, so I selected the code. Press Ctrl+C, or just write it down.'); }
+      }
+    });
+  }
+
+  /* ---------- records ledger (data dictionary) ---------- */
+  const DICT = {
+    staff: { page: 12, desc: 'Everyone employed by Harrow Bay PD. One row per person.', since: '1984', mig: 'MIGRATED<br>20 NOV 1999<br>NORTHGATE SYS.', cols: {
+      staff_id: 'Unique number for each employee.', first_name: 'Given name.', last_name: 'Family name.',
+      department: 'Where the person works. Departments are opened, merged and closed over the years.', job_title: 'Official title.',
+      hire_date: 'First day of work, written YYYY-MM-DD.', badge_id: 'Number printed on the door badge. Also used in badge_log.', phone_ext: 'Desk phone extension.' },
+      rules: { badge_id: ['UNIQUE'] } },
+    badge_log: { page: 31, desc: 'One row each time a badge is swiped at a door reader.', since: '1997', mig: 'MIGRATED<br>21 NOV 1999<br>NORTHGATE SYS.', cols: {
+      log_id: 'Running number of the swipe.', badge_id: 'Which badge was swiped. Look it up in staff.', room: 'The door the reader is on.',
+      entry_time: 'When the person swiped in, YYYY-MM-DD HH:MM.', exit_time: 'When they swiped out. Empty (NULL) while they are still inside.' } },
+    case_records: { page: 47, desc: 'Every police case since 1988, typed in from paper files and the old mainframe.', since: '1988', mig: 'MIGRATED<br>22 NOV 1999<br>NORTHGATE SYS.', cols: {
+      case_no: 'Year and running number, e.g. 1991-0730.', title: 'Short description of the case.', opened_on: 'Date the case was opened.',
+      outcome: 'How the case ended. Only four values are allowed.', modified_by: 'Login of the last person who changed the row.', modified_on: 'Date of the last change.' },
+      rules: { outcome: ["CHECK: 'Open', 'Charged', 'Dismissed', 'Closed - no charges'"] } }
+  };
+  let ledgerSel = { t: 'staff', c: null }, ledgerOpen = { staff: true };
+  function columnsOf(t) { const r = db.exec(`SELECT name, type, "notnull", pk FROM pragma_table_info('${t.replace(/'/g, "''")}')`); return r.length ? r[0].values : []; }
+  function rowCount(t) { try { return db.exec(`SELECT count(*) FROM "${t.replace(/"/g, '""')}"`)[0].values[0][0]; } catch (e) { return 0; } }
+  function bar(w) { return `<span class="redact" style="width:${w}px"></span>`; }
+  function renderLedger() {
+    const tables = allTables(), story = Object.keys(STORY_TABLES), mine = tables.filter(t => !STORY_TABLES[t]);
+    let h = `<button class="node" data-lroot>${ICON.db}<b>HBPD_RECORDS</b></button><div class="node lvl1 muted">${ICON.folder.replace('<svg', '<svg width="16" height="16"')}Department tables</div>`;
+    story.forEach(t => {
+      if (STORY_TABLES[t] > S.unlocked) { h += `<button class="node lvl2 locked${ledgerSel.t === t ? ' sel' : ''}" data-lt="${t}">${ICON.lock}${bar(60 + t.length * 3)} <small>Case ${STORY_TABLES[t]}</small></button>`; return; }
+      h += `<button class="node lvl2${ledgerSel.t === t && !ledgerSel.c ? ' sel' : ''}" data-lt="${t}"><span class="tw">${ledgerOpen[t] ? '-' : '+'}</span>${ICON.tbl}${esc(t)}</button>`;
+      if (ledgerOpen[t]) columnsOf(t).forEach(c => { h += `<button class="node lvl3${ledgerSel.t === t && ledgerSel.c === c[0] ? ' sel' : ''}" data-lt="${t}" data-lc="${esc(c[0])}">${ICON.col}${esc(c[0])}</button>`; });
+    });
+    h += `<div class="node lvl1 muted">${ICON.folder.replace('<svg', '<svg width="16" height="16"')}Your tables</div>`;
+    if (!mine.length) h += `<div class="node lvl2 muted">(none yet)</div>`;
+    mine.forEach(t => {
+      h += `<button class="node lvl2${ledgerSel.t === t && !ledgerSel.c ? ' sel' : ''}" data-lt="${esc(t)}"><span class="tw">${ledgerOpen[t] ? '-' : '+'}</span>${ICON.tbl}${esc(t)}</button>`;
+      if (ledgerOpen[t]) columnsOf(t).forEach(c => { h += `<button class="node lvl3${ledgerSel.t === t && ledgerSel.c === c[0] ? ' sel' : ''}" data-lt="${esc(t)}" data-lc="${esc(c[0])}">${ICON.col}${esc(c[0])}</button>`; });
+    });
+    $('#ltree').innerHTML = h;
+    renderLedgerPage();
+  }
+  function renderLedgerPage() {
+    const t = ledgerSel.t, pg = $('#lpage');
+    if (!t) {
+      const tables = allTables();
+      pg.innerHTML = `<div class="run"><span>HARROW BAY P.D. · RECORDS LEDGER</span><span>VOL. II</span></div><h3>HBPD_RECORDS</h3><p class="desc">The department's data dictionary. Every table is a page in this ledger: what it holds, what each column means, and the rules the data must follow. It describes the shape of the records, never the records themselves.</p><div class="meta"><span><b>${tables.length}</b> tables</span><span>Engine: <b>SQLite</b></span><span>Keeper: <b>W. Briggs</b>, Records Supervisor</span></div><div class="ltip">Pick a table on the left. Click a column to highlight it, or use <b>Insert</b> to drop its name into Query Analyzer.</div><div class="foot"><span>Maintained by the Records Division, Basement B2</span><span>p. 1</span></div>`;
+      $('#ledgerStatus').textContent = `${tables.length} tables`; return;
+    }
+    if (STORY_TABLES[t] && STORY_TABLES[t] > S.unlocked) {
+      pg.innerHTML = `<div class="run"><span>HARROW BAY P.D. · RECORDS LEDGER</span><span>p. ${DICT[t].page}</span></div><h3>${bar(220)}</h3><p class="desc">This page is sealed. Chief Mallory releases it with Case ${STORY_TABLES[t]}.</p><table><thead><tr><th>Column</th><th>Type</th><th>Meaning</th></tr></thead><tbody>${[90, 70, 110, 60, 80].map(w => `<tr><td>${bar(w)}</td><td>${bar(40)}</td><td>${bar(120 + w)}</td></tr>`).join('')}</tbody></table><div class="mig sealed">SEALED</div><div class="foot"><span>Access: Chief of Police only</span><span>p. ${DICT[t].page}</span></div>`;
+      $('#ledgerStatus').textContent = 'Sealed page'; return;
+    }
+    const d = DICT[t], cols = columnsOf(t), n = rowCount(t);
+    const rows = cols.map(c => {
+      const tags = (c[3] ? '<span class="tag pk">PRIMARY KEY</span>' : '') + (c[2] && !c[3] ? '<span class="tag">NOT NULL</span>' : '') + ((d && d.rules && d.rules[c[0]]) || []).map(r => `<span class="tag">${esc(r)}</span>`).join('');
+      const meaning = d ? (d.cols[c[0]] || '') : 'Added by you.';
+      return `<tr class="${ledgerSel.c === c[0] ? 'hl' : ''}" data-lrow="${esc(c[0])}"><td class="c">${esc(c[0])}</td><td class="t">${esc(c[1] || 'ANY')}</td><td class="r">${tags || '<span style="color:#9a9686">-</span>'}</td><td>${esc(meaning)}</td><td><button class="btn ins" data-lins="${esc(c[0])}" title="Insert column name into the query">Insert</button></td></tr>`;
+    }).join('');
+    pg.innerHTML = `<div class="run"><span>HARROW BAY P.D. · RECORDS LEDGER</span><span>${d ? 'p. ' + d.page : 'LOOSE SHEET'}</span></div>
+      <h3>${esc(t)}</h3><p class="desc">${d ? esc(d.desc) : 'A table you built yourself. Not yet approved by the Records Supervisor.'}</p>
+      <div class="meta"><span><b>${n}</b> row${n === 1 ? '' : 's'}</span><span><b>${cols.length}</b> columns</span><span>${d ? `Kept since <b>${d.since}</b>` : 'Created by <b>NEW TEMP</b>, 12 Nov 2001'}</span></div>
+      ${d ? `<div class="mig">${d.mig}</div>` : ''}
+      <table><thead><tr><th>Column</th><th>Type</th><th>Rules</th><th>Meaning</th><th></th></tr></thead><tbody>${rows}</tbody></table>
+      <div class="actions"><button class="btn" data-lquery="${esc(t)}">Write a query for this table</button></div>
+      <div class="foot"><span>${d ? 'Checked by W. Briggs, Records Supervisor' : 'Pencil copy, not filed'}</span><span>${d ? 'p. ' + d.page : ''}</span></div>`;
+    $('#ledgerStatus').textContent = `${t}: ${cols.length} columns, ${n} rows`;
+  }
+  function insertSql(text) {
+    const ta = $('#sql'); if ($('#w-qa').hidden) openWin('w-qa');
+    const a = ta.selectionStart ?? ta.value.length, b = ta.selectionEnd ?? a;
+    ta.setRangeText(text, a, b, 'end'); ta.focus(); S.sql = ta.value; save();
+  }
+  $('#ltree').addEventListener('click', e => {
+    if (e.target.closest('[data-lroot]')) { ledgerSel = { t: null, c: null }; renderLedger(); return; }
+    const b = e.target.closest('[data-lt]'); if (!b) return; const t = b.dataset.lt, c = b.dataset.lc || null;
+    if (!c && ledgerSel.t === t && !ledgerSel.c && !(STORY_TABLES[t] > S.unlocked)) ledgerOpen[t] = !ledgerOpen[t]; else if (!c) ledgerOpen[t] = true;
+    ledgerSel = { t, c }; renderLedger();
+  });
+  $('#lpage').addEventListener('click', e => {
+    const ins = e.target.closest('[data-lins]'); if (ins) { insertSql(ins.dataset.lins); return; }
+    const q = e.target.closest('[data-lquery]'); if (q) { const ta = $('#sql'); ta.value = `SELECT *\nFROM ${q.dataset.lquery}\nLIMIT 10;`; S.sql = ta.value; save(); openWin('w-qa'); ta.focus(); return; }
+    const r = e.target.closest('[data-lrow]'); if (r) { ledgerSel.c = r.dataset.lrow; ledgerOpen[ledgerSel.t] = true; renderLedger(); }
+  });
+
   /* ---------- start ---------- */
   WIN_IDS.forEach(id => decorate($('#' + id)));
   $('#diskoBot').innerHTML = DISKO_SVG;
@@ -1449,7 +1940,7 @@ and MySQL too.`);
       SQL = S_;
       const bytes = loadDbBytes();
       try { db = bytes ? new SQL.Database(bytes) : freshDb(); db.exec('SELECT 1 FROM staff LIMIT 1'); } catch (e) { db = freshDb(); }
-      saveDb();
+      saveDb(); checkNewDocs(true);
       boot(false);
     });
   }

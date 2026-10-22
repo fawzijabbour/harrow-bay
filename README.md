@@ -19,7 +19,8 @@ An SQL detective game that runs on a fake 1998-era desktop. It's November 2001, 
 - Lessons, auto-checked practice tasks and three-step hints for every task
 - Disko, a pixel floppy disk helper who explains SQL errors in plain words
 - Evidence board, case notes, email inbox, messenger and a "case closed" stamp
-- Progress saved in the browser; one-click database reset
+- Progress saves automatically in the browser; a short shift code carries it to another computer
+- One-click database reset
 - Works offline: a single self-contained HTML file
 
 ## Tech
